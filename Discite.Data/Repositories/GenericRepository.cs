@@ -3,20 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Project.Discite.Models;
+using Discite.Data.Models;
+using Discite.Data;
 
 namespace ProjectDiscite.Data.Repositories
 {
     public abstract class GenericRepository<T> where T : class, IModelWithId
     {
-        protected readonly TravelAgencyDbContext dbContext;
+        protected readonly DisciteDbContext dbContext;
 
         public GenericRepository()
         {
-            this.dbContext = new TravelAgencyDbContext();
+            this.dbContext = new DisciteDbContext();
         }
 
-        public GenericRepository(TravelAgencyDbContext dbContext)
+        public GenericRepository(DisciteDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
