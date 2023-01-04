@@ -10,15 +10,16 @@ namespace Discite.API.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        public UsersController(DisciteDbContext context)
+        UserRepository userRepository;
+        public UsersController()
         {
-             
+             userRepository= new UserRepository();
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<UserModel>> GetUsers()
+        public IEnumerable<UserModel> GetUsers()
         {
-            return UserRepository.GetAll();
+            return userRepository.GetAll();
         }
     }
 }
