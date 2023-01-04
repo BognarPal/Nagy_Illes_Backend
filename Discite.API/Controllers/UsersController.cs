@@ -10,7 +10,7 @@ namespace Discite.API.Controllers
     {
         public UsersController(DisciteDbContext context)
         {
-            
+             
         }
     }
 }

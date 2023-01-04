@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Discite.Data.Models
 {
-    public class UserModel
+    public class UserModel : IModelWithId
     {
         public int Id { get; set; }
         public string UserName { get; set; }
