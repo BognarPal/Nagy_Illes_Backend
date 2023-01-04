@@ -1,5 +1,7 @@
 ﻿
 using Discite.Data;
+using Discite.Data.Models;
+using Discite.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Discite.API.Controllers
@@ -11,6 +13,12 @@ namespace Discite.API.Controllers
         public UsersController(DisciteDbContext context)
         {
              
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<UserModel>> GetUsers()
+        {
+            return UserRepository.GetAll();
         }
     }
 }
