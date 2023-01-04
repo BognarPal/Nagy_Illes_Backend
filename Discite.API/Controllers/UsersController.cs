@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Discite.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Discite.API.Controllers
 {
@@ -6,8 +8,9 @@ namespace Discite.API.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        public UsersController(DataContext context)
+        public UsersController(DisciteDbContext context)
         {
+            
         }
     }
 }
