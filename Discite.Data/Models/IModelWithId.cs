@@ -9,5 +9,7 @@ namespace Discite.Data.Models
     public interface IModelWithId
     {
         public int Id { get; set; }
+
+       
     }
 }
