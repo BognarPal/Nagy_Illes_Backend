@@ -21,5 +21,15 @@ namespace Discite.API.Controllers
         {
             return userRepository.GetAll();
         }
+
+        [HttpGet("{id}")]
+
+        public UserModel GetUsers(int id)
+        {
+            return userRepository.GetAll().SingleOrDefault(U => U.Id == id);
+        }
+
+        
+
     }
 }
