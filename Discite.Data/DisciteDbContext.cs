@@ -28,6 +28,7 @@ namespace Discite.Data
                 optionsBuilder.UseMySql(connString, ServerVersion.AutoDetect(connString));
         }
 
+        public DbSet<UserModel> Users { get; set; }
        
     }
 }
