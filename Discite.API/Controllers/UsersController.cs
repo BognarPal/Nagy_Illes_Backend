@@ -3,6 +3,8 @@ using Discite.Data;
 using Discite.Data.Models;
 using Discite.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Discite.API.Controllers
 {
@@ -28,6 +30,24 @@ namespace Discite.API.Controllers
             return userRepository.GetAll().SingleOrDefault(U => U.Id == id);
         }
 
+        [HttpPost("register")]
+
+        public async Task<ActionResult<UserModel>> Register (string username, string email, string password)
+        {
+            using var hmac = new HMACSHA256();
+
+            var user = new UserModel
+            {
+                Email = email,
+                UserName = username,
+                Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
+                Salt = hmac.Key
+            };
+
+            userRepository.Insert(user);
+
+            return user;
+        }
         
 
     }
