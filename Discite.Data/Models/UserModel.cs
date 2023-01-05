@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,14 +12,14 @@ namespace Discite.Data.Models
     public class UserModel : IModelWithId
     {
         public int Id { get; set; }
+        [Required]
         public string UserName { get; set; }
-
+        [Required]
         public string Email { get; set; }
-
+        [Required]
         public byte[] Hash { get; set; }
-
+        [Required]
         public byte[] Salt { get; set; }
-        
         [Column("register_date")]
         public DateTime RegisterDate { get; set; }
 
