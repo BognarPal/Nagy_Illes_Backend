@@ -15,9 +15,10 @@ namespace Discite.Data.Models
 
         public string Email { get; set; }
 
-        public string Hash { get; set; }
+        public byte[] Hash { get; set; }
 
-        public string Salt { get; set; }
+        public byte[] Salt { get; set; }
+        
         [Column("register_date")]
         public DateTime RegisterDate { get; set; }
 
