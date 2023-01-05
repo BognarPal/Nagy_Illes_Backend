@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Discite.API.Controllers
 {
-    public class UsersController : BaseApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UsersController : ControllerBase
     {
         UserRepository userRepository;
         public UsersController()
