@@ -11,5 +11,17 @@ namespace Discite.Data.Models
     public class RunModel : IModelWithId
     {
         public int Id { get; set; }
+        public UserModel User { get; set; }
+        public ClassModel Class { get; set; }
+        public string Path { get; set; }
+        public int Gold { get; set; }
+        public int Score { get; set; }
+        public int Runtime { get; set; }
+        public int Progress { get; set; }
+        [Column("version")]
+        public string GameVersion { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public float CurrentHp { get; set; }
     }
 }
