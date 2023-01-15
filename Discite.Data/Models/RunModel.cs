@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Discite.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Discite.Data.Models
         public int Gold { get; set; }
         public int Score { get; set; }
         public int Runtime { get; set; }
-        public int Progress { get; set; }
+        public RunStatus Status { get; set; }
         [Column("version")]
         public string GameVersion { get; set; }
         public DateTime StartDate { get; set; }
