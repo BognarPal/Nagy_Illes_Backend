@@ -21,5 +21,7 @@ namespace Discite.Data.Models
         [Column("register_date")]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
 
+        public DateTime LastActive { get; set; } = DateTime.Now;
+
     }
 }
