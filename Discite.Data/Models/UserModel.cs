@@ -23,5 +23,7 @@ namespace Discite.Data.Models
 
         public DateTime LastActive { get; set; } = DateTime.Now;
 
+        public ICollection<RunModel> Runs { get; set; }
+
     }
 }
