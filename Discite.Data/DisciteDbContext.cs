@@ -32,6 +32,7 @@ namespace Discite.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UserModel>().HasIndex(e => e.Email).IsUnique();
+            modelBuilder.Entity<UserModel>().HasIndex(e => e.UserName).IsUnique();
 
             modelBuilder.Entity<EnemyModel>().HasData
             (
