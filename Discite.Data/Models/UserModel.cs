@@ -19,7 +19,7 @@ namespace Discite.Data.Models
 
         public string Salt { get; set; }
         [Column("register_date")]
-        public DateTime RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
 
     }
 }
