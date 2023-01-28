@@ -3,6 +3,7 @@ using System;
 using Discite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Discite.Data.Migrations
 {
     [DbContext(typeof(DisciteDbContext))]
-    partial class DisciteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230121135408_PDMigration")]
+    partial class PDMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,28 +250,23 @@ namespace Discite.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<byte[]>("Hash")
-                        .IsRequired()
-                        .HasColumnType("longblob");
+                    b.Property<string>("Hash")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("register_date");
 
-                    b.Property<byte[]>("Salt")
-                        .IsRequired()
-                        .HasColumnType("longblob");
+                    b.Property<string>("Salt")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("user");
                     b.HasIndex("Email")
                         .IsUnique();
 
