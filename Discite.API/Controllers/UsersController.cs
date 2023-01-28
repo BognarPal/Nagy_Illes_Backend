@@ -50,11 +50,13 @@ namespace Discite.API.Controllers
         {
             UserModel user = userRepository.GetAll().SingleOrDefault(u => u.Email == email);
 
-            if (user == null) return Unauthorized("Invalid username or password");
+            if (user == null)
+                return Unauthorized("Invalid email");
 
             using var hmac = new HMACSHA256(user.Salt);
 
-            if (hmac.ComputeHash(Encoding.UTF8.GetBytes(password)) != user.Hash) return Unauthorized("Invalid username or password");
+            if (!user.Hash.SequenceEqual(hmac.ComputeHash(Encoding.UTF8.GetBytes(password))))
+                return Unauthorized("Invalid password");
 
             return user;
         } 
