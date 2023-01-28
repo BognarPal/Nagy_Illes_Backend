@@ -18,8 +18,14 @@ namespace Discite.Data.Models
         public string Hash { get; set; }
 
         public string Salt { get; set; }
-        [Column("register_date")]
-        public DateTime RegisterDate { get; set; }
+
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
+
+        public DateTime LastActive { get; set; } = DateTime.Now;
+
+        public ICollection<RunModel> Runs { get; set; }
+
+        public ICollection<UserClassModel> Classes { get; set; }
 
     }
 }
