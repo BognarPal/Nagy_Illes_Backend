@@ -248,23 +248,28 @@ namespace Discite.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Hash")
+                        .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<byte[]>("Hash")
+                        .IsRequired()
+                        .HasColumnType("longblob");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("register_date");
 
-                    b.Property<string>("Salt")
-                        .HasColumnType("longtext");
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("longblob");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
+                    b.ToTable("user");
                     b.HasIndex("Email")
                         .IsUnique();
 

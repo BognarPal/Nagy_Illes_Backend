@@ -15,7 +15,7 @@ namespace Discite.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connString = ConfigurationManager.ConnectionStrings["travels"]?.ConnectionString;
+            var connString = ConfigurationManager.ConnectionStrings["project_discite"]?.ConnectionString;
 
 #if DEBUG
             if (string.IsNullOrWhiteSpace(connString))
