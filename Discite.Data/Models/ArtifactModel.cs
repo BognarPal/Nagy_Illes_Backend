@@ -14,5 +14,8 @@ namespace Discite.Data.Models
         public string Name { get; set; }
         [Column("upgrade_level")]
         public int MaxLevel { get; set; }
+
+        public ICollection<ClassArtifactModel> Classes { get; set; }
+        public ICollection<RunArtifactModel> Runs { get; set; }
     }
 }

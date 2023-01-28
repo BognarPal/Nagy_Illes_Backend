@@ -34,6 +34,26 @@ namespace Discite.Data
             modelBuilder.Entity<UserModel>().HasIndex(e => e.Email).IsUnique();
             modelBuilder.Entity<UserModel>().HasIndex(e => e.UserName).IsUnique();
 
+
+            modelBuilder.Entity<ClassArtifactModel>().HasOne(e => e.Class).WithMany(e => e.Artifacts).HasForeignKey(e => e.ClassId);
+            modelBuilder.Entity<ClassArtifactModel>().HasOne(e => e.Artifact).WithMany(e => e.Classes).HasForeignKey(e => e.ArtifactId);
+
+            modelBuilder.Entity<RunArtifactModel>().HasOne(e => e.Run).WithMany(e => e.Artifacts).HasForeignKey(e => e.RunId);
+            modelBuilder.Entity<RunArtifactModel>().HasOne(e => e.Artifact).WithMany(e => e.Runs).HasForeignKey(e => e.ArtifactId);
+
+            modelBuilder.Entity<RunEnemyModel>().HasOne(e => e.Run).WithMany(e => e.Enemies).HasForeignKey(e => e.RunId);
+            modelBuilder.Entity<RunEnemyModel>().HasOne(e => e.Enemy).WithMany(e => e.Runs).HasForeignKey(e => e.EnemyId);
+
+            modelBuilder.Entity<RunWeaponModel>().HasOne(e => e.Run).WithMany(e => e.Weapons).HasForeignKey(e => e.RunId);
+            modelBuilder.Entity<RunWeaponModel>().HasOne(e => e.Weapon).WithMany(e => e.Runs).HasForeignKey(e => e.WeaponId);
+
+            modelBuilder.Entity<RunRoomModel>().HasOne(e => e.Run).WithMany(e => e.Rooms).HasForeignKey(e => e.RunId);
+            modelBuilder.Entity<RunRoomModel>().HasOne(e => e.Room).WithMany(e => e.Runs).HasForeignKey(e => e.RoomId);
+
+            modelBuilder.Entity<UserClassModel>().HasOne(e => e.User).WithMany(e => e.Classes).HasForeignKey(e => e.UserId);
+            modelBuilder.Entity<UserClassModel>().HasOne(e => e.Class).WithMany(e => e.Users).HasForeignKey(e => e.ClassId);
+
+
             modelBuilder.Entity<EnemyModel>().HasData
             (
                 new EnemyModel() { Id = 1, Name = "Ghoul", MaxHp = 20, Damage = 10, Energy = 0, Speed = 0.7f },

@@ -14,5 +14,7 @@ namespace Discite.Data.Models
         public string Name { get; set; }
         public float Damage { get; set; }
         public float AttackSpeed { get; set; }
+
+        public ICollection<RunWeaponModel> Runs { get; set; }
     }
 }

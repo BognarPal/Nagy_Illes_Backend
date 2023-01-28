@@ -12,5 +12,7 @@ namespace Discite.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public ICollection<RunRoomModel> Runs { get; set; }
     }
 }

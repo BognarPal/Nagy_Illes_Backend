@@ -26,5 +26,10 @@ namespace Discite.Data.Models
         public DateTime EndDate { get; set; }
         public float CurrentHp { get; set; }
 
+        public ICollection<RunArtifactModel> Artifacts { get; set; }
+        public ICollection<RunRoomModel> Rooms { get; set; }
+        public ICollection<RunWeaponModel> Weapons { get; set; }
+        public ICollection<RunEnemyModel> Enemies { get; set; }
+
     }
 }

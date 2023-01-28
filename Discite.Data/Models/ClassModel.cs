@@ -16,5 +16,7 @@ namespace Discite.Data.Models
         public float Damage { get; set; }
         public float Energy { get; set; }
         public float Speed { get; set; }
+        public ICollection<ClassArtifactModel> Artifacts { get; set; }
+        public ICollection<UserClassModel> Users { get; set; }
     }
 }
