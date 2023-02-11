@@ -10,6 +10,8 @@ namespace Discite.Data.Models
     [Table("class_artifact")]
     public class ClassArtifactModel
     {
+        public int Id { get; set; }
+
         public int ClassId { get; set; }
         public ClassModel Class { get; set; }
 

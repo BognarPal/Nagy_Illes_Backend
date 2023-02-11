@@ -34,7 +34,6 @@ namespace Discite.Data
             modelBuilder.Entity<UserModel>().HasIndex(e => e.Email).IsUnique();
             modelBuilder.Entity<UserModel>().HasIndex(e => e.UserName).IsUnique();
 
-
             modelBuilder.Entity<ClassArtifactModel>().HasOne(e => e.Class).WithMany(e => e.Artifacts).HasForeignKey(e => e.ClassId);
             modelBuilder.Entity<ClassArtifactModel>().HasOne(e => e.Artifact).WithMany(e => e.Classes).HasForeignKey(e => e.ArtifactId);
 
