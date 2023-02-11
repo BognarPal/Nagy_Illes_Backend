@@ -1,23 +1,22 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Discite.Data.Models;
 using Discite.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjectDiscite.Data.Repositories
 {
     public abstract class GenericRepository<T> where T : class, IModelWithId
     {
-        protected readonly DisciteDbContext dbContext;
+        protected readonly DbContext dbContext;
 
-        public GenericRepository()
+        public GenericRepository(): this(new DisciteDbContext())
         {
-            this.dbContext = new DisciteDbContext();
         }
 
-        public GenericRepository(DisciteDbContext dbContext)
+        public GenericRepository(DbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -44,9 +43,11 @@ namespace ProjectDiscite.Data.Repositories
         public virtual void Delete(int id)
         {
             var item = dbContext.Find<T>(id);
-            dbContext.Set<T>().Remove(item);
-            dbContext.SaveChanges();
+            if (item != null)
+            {
+                dbContext.Set<T>().Remove(item);
+                dbContext.SaveChanges();
+            }
         }
-
     }
 }
