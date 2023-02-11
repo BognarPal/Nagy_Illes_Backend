@@ -10,12 +10,5 @@ namespace Discite.Data.Repositories
 {
     public class UserRepository : GenericRepository<UserModel>
     {
-        public UserRepository()
-        {
-
-        }
-
-        public UserRepository(DisciteDbContext dbContext) : base(dbContext)
-        { }
     }
 }
