@@ -10,6 +10,8 @@ namespace Discite.Data.Models
     [Table("user_class")]
     public class UserClassModel
     {
+        public int Id { get; set; }
+
         public int UserId { get; set; }
         public UserModel User { get; set; }
 

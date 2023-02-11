@@ -10,6 +10,8 @@ namespace Discite.Data.Models
     [Table("run_artifact")]
     public class RunArtifactModel
     {
+        public int Id { get; set; }
+
         public int RunId { get; set; }
         public RunModel Run { get; set; }
 
