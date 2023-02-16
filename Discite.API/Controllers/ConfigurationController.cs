@@ -8,9 +8,9 @@ namespace Discite.API.Controllers
 {
     public class ConfigurationController : BaseApiController
     {
-        private class Config
+        public class Configuration
         {
-            public Config(WeaponRepository weaponRepository, EnemyRepository enemyRepository, ArtifactRepository artifactRepository, ClassRepository classRepository) 
+            public Configuration(WeaponRepository weaponRepository, EnemyRepository enemyRepository, ArtifactRepository artifactRepository, ClassRepository classRepository) 
             {
                 this.Weapons = weaponRepository.GetAll();
                 this.Enemies = enemyRepository.GetAll();
@@ -33,13 +33,12 @@ namespace Discite.API.Controllers
             enemyRepository = new EnemyRepository();
             artifactRepository = new ArtifactRepository();
             classRepository = new ClassRepository();
-
         }
 
         [HttpGet]
-        public string Configuration()
+        public Configuration Config()
         {
-            return JsonSerializer.Serialize(new Config(weaponRepository, enemyRepository, artifactRepository, classRepository));
+            return new Configuration(weaponRepository, enemyRepository, artifactRepository, classRepository);
         }
     }
 }
