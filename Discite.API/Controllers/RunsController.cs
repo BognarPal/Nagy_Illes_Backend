@@ -8,9 +8,25 @@ namespace Discite.API.Controllers
     {
         RunRepository runRepository;
 
-        public RunsController(RunRepository runRepository)
+        public RunsController()
         {
-            this.runRepository = runRepository;
+            this.runRepository = new RunRepository();
+        }
+
+        [HttpPost]
+        public IActionResult NewGame() 
+        {
+            RunModel run = new RunModel();
+            run.UserId = 1;
+            var crun = runRepository.Insert(run);
+            return Created($"api/runs/{crun.Id}", crun);
+        }
+
+        [HttpPut]
+        public IActionResult Save([FromBody]RunModel run)
+        {
+            runRepository.Update(run);
+            return Ok();
         }
 
         [HttpGet]
@@ -21,21 +37,6 @@ namespace Discite.API.Controllers
                 return NotFound();
             else
                 return Ok(run);
-        }
-
-        [HttpPost]
-        public IActionResult Save([FromBody]RunModel run)
-        {
-            runRepository.Update(run);
-            return Ok();
-        }
-
-        [HttpPost("new")]
-        public IActionResult NewGame() 
-        {
-            RunModel run = new RunModel();
-            var crun = runRepository.Insert(run);
-            return Created($"api/Runs/{crun.Id}", crun);
         }
     }
 }
