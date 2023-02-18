@@ -1,6 +1,7 @@
 ﻿using Discite.Data;
 using Discite.Data.Models;
 using Discite.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,13 +17,14 @@ namespace Discite.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<UserModel> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
-            return userRepository.GetAll();
+            return Ok(userRepository.GetAll());
         }
 
         [HttpGet("{id}")]
-        public UserModel GetUsers(int id)
+        [Authorize]
+        public async Task<ActionResult<UserModel>> GetUser(int id)
         {
             return userRepository.GetAll().SingleOrDefault(U => U.Id == id);
         }
