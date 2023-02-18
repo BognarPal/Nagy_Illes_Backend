@@ -11,9 +11,9 @@ namespace Discite.API.Services
     {
         private readonly SymmetricSecurityKey key;
         private readonly IConfiguration config;
-        public TokenService(IConfiguration config) 
+        public TokenService()
         {
-            this.config = config;
+            config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.config["JWT:Key"]));
         }
         public string CreateToken(UserModel user)

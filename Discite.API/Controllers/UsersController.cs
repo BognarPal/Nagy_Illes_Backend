@@ -1,4 +1,6 @@
-﻿using Discite.API.DTOs;
+﻿using Discite.API.Interfaces;
+using Discite.API.Services;
+using Discite.API.DTOs;
 using Discite.Data;
 using Discite.Data.Models;
 using Discite.Data.Repositories;
@@ -15,12 +17,15 @@ namespace Discite.API.Controllers
     public class UsersController : BaseApiController
     {
         UserRepository userRepository;
+        ITokenService tokenService;
         public UsersController()
         {
              userRepository= new UserRepository();
+             tokenService = new TokenService();
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
             return Ok(userRepository.GetAll());
@@ -34,7 +39,8 @@ namespace Discite.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserModel>> Register([FromBody]RegisterDto registerDto)
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDto>> Register([FromBody]RegisterDto registerDto)
         {
             using var hmac = new HMACSHA256();
 
@@ -46,11 +52,20 @@ namespace Discite.API.Controllers
                 Salt = hmac.Key
             };
 
-            return userRepository.Insert(user);
+            var newUser = userRepository.Insert(user);
+
+            return new UserDto
+            {
+                Id = newUser.Id,
+                Username = newUser.UserName,
+                Email = newUser.Email,
+                Token = tokenService.CreateToken(newUser),
+            };
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserModel>> Login([FromBody]LoginDto loginDto)
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDto>> Login([FromBody]LoginDto loginDto)
         {
             UserModel user = userRepository.GetAll().SingleOrDefault(u => u.Email == loginDto.Email);
 
@@ -62,25 +77,13 @@ namespace Discite.API.Controllers
             if (!user.Hash.SequenceEqual(hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password))))
                 return Unauthorized("Invalid password");
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(base.GetConfigValue("JWT:Key"));
-            var tokenDescriptor = new SecurityTokenDescriptor()
+            return new UserDto
             {
-                Expires = DateTime.Now.AddMinutes(int.Parse(this.GetConfigValue("JWT:ExpireInMinute"))),
-                SigningCredentials = new SigningCredentials
-                (
-                    new SymmetricSecurityKey(tokenKey),
-                    SecurityAlgorithms.HmacSha256Signature
-                ),
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim("Login", loginName),
-                    new Claim(ClaimTypes.Role, "Admin"),
-                    new Claim(ClaimTypes.Role, "User"),
-                    new Claim(ClaimTypes.Role, "Valami")
-                })
+                Id = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                Token = tokenService.CreateToken(user),
             };
-            return user;
         } 
     }
 }
