@@ -65,8 +65,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("EnableCORS");
 #endif
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
