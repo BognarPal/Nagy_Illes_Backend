@@ -21,6 +21,14 @@ namespace ProjectDiscite.Data.Repositories
             this.dbContext = dbContext;
         }
 
+        public virtual T this[int i]
+        {
+            get
+            {
+                return dbContext.Find<T>(i);
+            }
+        }
+
         public virtual IEnumerable<T> GetAll()
         {
             return dbContext.Set<T>().ToList();

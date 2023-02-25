@@ -29,10 +29,10 @@ namespace Discite.API.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public IActionResult Load(int rid)
+        [HttpGet("{id}")]
+        public IActionResult Load(int id)
         {
-            var run = runRepository.GetAll().SingleOrDefault(r => r.Id == rid);
+            var run = runRepository.GetAll().SingleOrDefault(r => r.Id == id);
             if (run == null)
                 return NotFound();
             else
