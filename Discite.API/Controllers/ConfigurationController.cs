@@ -34,5 +34,13 @@ namespace Discite.API.Controllers
 
             return config;
         }
+
+        [HttpPatch]
+        public ActionResult EditConfig(ConfigurationDto config)
+        {
+
+
+            return Ok();
+        }
     }
 }
