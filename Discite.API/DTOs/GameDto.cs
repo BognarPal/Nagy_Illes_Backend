@@ -18,6 +18,7 @@ namespace Discite.API.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public float CurrentHp { get; set; }
+        public int Seed { get; set; }
 
         public ICollection<RunArtifactModel> Artifacts { get; set; }
         public ICollection<RunRoomModel> Rooms { get; set; }
