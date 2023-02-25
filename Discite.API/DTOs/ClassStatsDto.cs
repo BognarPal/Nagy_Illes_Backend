@@ -8,7 +8,7 @@
         public int Kills { get; set; }
         public int Deaths { get; set; }
     }
-    public class ClassDto
+    public class ClassStatsDto
     {
         public ClassStat[] ClassStats { get; set; }
     }
