@@ -2,27 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Discite.Data.Repositories;
 using Discite.Data.Models;
+using Discite.API.DTOs;
 using System.Text.Json;
 
 namespace Discite.API.Controllers
 {
     public class ConfigurationController : BaseApiController
     {
-        public class Configuration
-        {
-            public Configuration(WeaponRepository weaponRepository, EnemyRepository enemyRepository, ArtifactRepository artifactRepository, ClassRepository classRepository) 
-            {
-                this.Weapons = weaponRepository.GetAll();
-                this.Enemies = enemyRepository.GetAll();
-                this.Artifacts = artifactRepository.GetAll();
-                this.Classes = classRepository.GetAll();
-            }
-            public IEnumerable<WeaponModel> Weapons { get; set; }
-            public IEnumerable<ArtifactModel> Artifacts { get; set; }
-            public IEnumerable<EnemyModel> Enemies { get; set; }
-            public IEnumerable<ClassModel> Classes { get; set; }
-
-        }
         WeaponRepository weaponRepository;
         EnemyRepository enemyRepository;
         ArtifactRepository artifactRepository;
@@ -36,9 +22,17 @@ namespace Discite.API.Controllers
         }
 
         [HttpGet]
-        public Configuration Config()
+        public ConfigurationDto Config()
         {
-            return new Configuration(weaponRepository, enemyRepository, artifactRepository, classRepository);
+            var config = new ConfigurationDto()
+            {
+                Weapons = weaponRepository.GetAll().Select(x => new Weapon() { Id = x.Id, Name = x.Name, Damage = x.Damage, AttackSpeed = x.AttackSpeed }),
+                Enemies = enemyRepository.GetAll().Select(x => new Enemy() { Id = x.Id, Name = x.Name, Damage = x.Damage, Energy = x.Energy, MaxHp = x.MaxHp, Speed = x.Speed }),
+                Classes = classRepository.GetAll().Select(x => new Class() { Id = x.Id, Name = x.Name, Damage = x.Damage, Energy = x.Energy, MaxHp = x.MaxHp, Speed = x.Speed }),
+                Artifacts = artifactRepository.GetAll().Select(x => new Artifact() { Id = x.Id, Name = x.Name, MaxLevel = x.MaxLevel })
+            };
+
+            return config;
         }
     }
 }
