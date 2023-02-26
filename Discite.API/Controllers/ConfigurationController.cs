@@ -4,6 +4,9 @@ using Discite.Data.Repositories;
 using Discite.Data.Models;
 using Discite.API.DTOs;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using Discite.API.Services;
+using Discite.API.Extensions;
 
 namespace Discite.API.Controllers
 {
@@ -22,6 +25,7 @@ namespace Discite.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ConfigurationDto Config()
         {
             var config = new ConfigurationDto()
@@ -36,8 +40,12 @@ namespace Discite.API.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public ActionResult<ConfigurationDto> EditConfig(ConfigurationDto config)
         {
+            if (Request.uid() != 0)
+                return Unauthorized();
+
             foreach (var w in config.Weapons)
                 weaponRepository.Update(new WeaponModel() { Id = w.Id, Name = w.Name, Damage = w.Damage, AttackSpeed = w.AttackSpeed });
  

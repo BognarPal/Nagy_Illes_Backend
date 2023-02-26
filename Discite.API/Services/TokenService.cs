@@ -20,7 +20,7 @@ namespace Discite.API.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Email)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
             };
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

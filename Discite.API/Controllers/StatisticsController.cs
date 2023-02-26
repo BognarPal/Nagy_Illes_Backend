@@ -3,6 +3,7 @@ using Discite.Data.Models;
 using Discite.Data.Repositories;
 using Discite.Data.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Discite.API.Controllers
 {
@@ -28,6 +29,7 @@ namespace Discite.API.Controllers
         }
 
         [HttpGet("toplist")]
+        [AllowAnonymous]
         public IEnumerable<ToplistDto> TopPlayers()
         {
             var users = userRepository.GetAll().OrderByDescending(u => u.Runs.Sum(r => r.Score)).Take(10);
@@ -43,7 +45,8 @@ namespace Discite.API.Controllers
         }
 
         [HttpGet("classes")]
-        public IEnumerable<ClassStatsDto> Classes() 
+        [AllowAnonymous]
+        public IEnumerable<ClassStatsDto> Classes()
         {
             var classes = classRepository.GetAll().Select(c => new ClassStatsDto()
             {
@@ -58,6 +61,7 @@ namespace Discite.API.Controllers
         }
 
         [HttpGet("weapons")]
+        [AllowAnonymous]
         public IEnumerable<WeaponStatsDto> Weapons()
         {
             var weapons = weaponRepository.GetAll().Select(w => new WeaponStatsDto()
@@ -71,6 +75,7 @@ namespace Discite.API.Controllers
         }
 
         [HttpGet("enemies")]
+        [AllowAnonymous]
         public IEnumerable<EnemyStatsDto> Enemies()
         {
             var enemies = enemyRepository.GetAll().Select(e => new EnemyStatsDto()
