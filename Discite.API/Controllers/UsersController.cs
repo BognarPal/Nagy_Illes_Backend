@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Discite.API.Extensions;
 
 namespace Discite.API.Controllers
 {
@@ -26,24 +27,31 @@ namespace Discite.API.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            if (GetUid.uid(Request.Headers["Authorization"]) != 0)
+            if (Request.uid() != 0)
                 return Unauthorized();
 
-            return Ok(userRepository.GetAll());
+            return Ok(userRepository.GetAll().Select(u => new UserDto() { Id = u.Id, Email = u.Email, Username = u.UserName }));
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<UserModel>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(int id)
         {
             var user = userRepository.GetAll().SingleOrDefault(U => U.Id == id);
-            var uid = GetUid.uid(Request.Headers["Authorization"]);
-            if (uid != 0 || uid != user.Id)
+            int uid = Request.uid();
+            if (!(uid == 0 || uid == user.Id))
                 return Unauthorized();
 
-            return user;
+            var ruser = new UserDto()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Username = user.UserName
+            };
+
+            return ruser;
         }
 
         [HttpPost("register")]

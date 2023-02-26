@@ -6,6 +6,7 @@ using Discite.API.DTOs;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Discite.API.Services;
+using Discite.API.Extensions;
 
 namespace Discite.API.Controllers
 {
@@ -42,7 +43,7 @@ namespace Discite.API.Controllers
         [Authorize]
         public ActionResult<ConfigurationDto> EditConfig(ConfigurationDto config)
         {
-            if (GetUid.uid(Request.Headers["Authorization"]) != 0)
+            if (Request.uid() != 0)
                 return Unauthorized();
 
             foreach (var w in config.Weapons)

@@ -3,6 +3,7 @@ using Discite.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Discite.API.Services;
+using Discite.API.Extensions;
 
 namespace Discite.API.Controllers
 {
@@ -20,7 +21,7 @@ namespace Discite.API.Controllers
         public IActionResult NewGame()
         {
             RunModel run = new RunModel();
-            run.UserId = GetUid.uid(Request.Headers["Authorization"]);
+            run.UserId = Request.uid();
             var crun = runRepository.Insert(run);
             return Created($"api/runs/{crun.Id}", crun);
         }
@@ -29,7 +30,7 @@ namespace Discite.API.Controllers
         [Authorize]
         public IActionResult Save([FromBody]RunModel run)
         {
-            if (GetUid.uid(Request.Headers["Authorization"]) != run.UserId)
+            if (Request.uid() != run.UserId)
                 return Unauthorized();
 
             runRepository.Update(run);
@@ -45,7 +46,7 @@ namespace Discite.API.Controllers
             if (run == null)
                 return NotFound();
             else
-                if (GetUid.uid(Request.Headers["Authorization"]) != run.UserId)
+                if (Request.uid() != run.UserId)
                     return Unauthorized();
 
                 return Ok(run);
