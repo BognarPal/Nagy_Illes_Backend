@@ -26,21 +26,31 @@ namespace Discite.API.Controllers
         {
             var config = new ConfigurationDto()
             {
-                Weapons = weaponRepository.GetAll().Select(x => new Weapon() { Id = x.Id, Name = x.Name, Damage = x.Damage, AttackSpeed = x.AttackSpeed }),
-                Enemies = enemyRepository.GetAll().Select(x => new Enemy() { Id = x.Id, Name = x.Name, Damage = x.Damage, Energy = x.Energy, MaxHp = x.MaxHp, Speed = x.Speed }),
-                Classes = classRepository.GetAll().Select(x => new Class() { Id = x.Id, Name = x.Name, Damage = x.Damage, Energy = x.Energy, MaxHp = x.MaxHp, Speed = x.Speed }),
-                Artifacts = artifactRepository.GetAll().Select(x => new Artifact() { Id = x.Id, Name = x.Name, MaxLevel = x.MaxLevel })
+                Weapons = weaponRepository.GetAll().Select(w => new Weapon() { Id = w.Id, Name = w.Name, Damage = w.Damage, AttackSpeed = w.AttackSpeed }),
+                Enemies = enemyRepository.GetAll().Select(e => new Enemy() { Id = e.Id, Name = e.Name, Damage = e.Damage, Energy = e.Energy, MaxHp = e.MaxHp, Speed = e.Speed }),
+                Classes = classRepository.GetAll().Select(c => new Class() { Id = c.Id, Name = c.Name, Damage = c.Damage, Energy = c.Energy, MaxHp = c.MaxHp, Speed = c.Speed }),
+                Artifacts = artifactRepository.GetAll().Select(a => new Artifact() { Id = a.Id, Name = a.Name, MaxLevel = a.MaxLevel })
             };
 
             return config;
         }
 
-        [HttpPatch]
-        public ActionResult EditConfig(ConfigurationDto config)
+        [HttpPut]
+        public ActionResult<ConfigurationDto> EditConfig(ConfigurationDto config)
         {
+            foreach (var w in config.Weapons)
+                weaponRepository.Update(new WeaponModel() { Id = w.Id, Name = w.Name, Damage = w.Damage, AttackSpeed = w.AttackSpeed });
+ 
+            foreach (var e in config.Enemies)
+                enemyRepository.Update(new EnemyModel() { Id = e.Id, Name = e.Name, Damage = e.Damage, Energy = e.Energy, MaxHp = e.MaxHp, Speed = e.Speed });
+    
+            foreach (var c in config.Classes)
+                classRepository.Update(new ClassModel() { Id = c.Id, Name = c.Name, Damage = c.Damage, Energy = c.Energy, MaxHp = c.MaxHp, Speed = c.Speed });
+   
+            foreach (var a in config.Artifacts)
+                artifactRepository.Update(new ArtifactModel() { Id = a.Id, Name = a.Name, MaxLevel = a.MaxLevel });
 
-
-            return Ok();
+            return Ok(Config());
         }
     }
 }
