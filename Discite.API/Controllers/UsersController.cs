@@ -48,7 +48,11 @@ namespace Discite.API.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
-                Username = user.UserName
+                Username = user.UserName,
+                RegisterDate = user.RegisterDate,
+                LastActive = user.LastActive,
+                Classes = user.Classes.Select(u => u.Id),
+                Runs = user.Runs.Select(r => r.Id)
             };
 
             return ruser;
