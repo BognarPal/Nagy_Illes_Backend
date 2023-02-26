@@ -28,6 +28,9 @@ namespace Discite.API.Controllers
         [Authorize]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
+            if (GetUid.uid(Request.Headers["Authorization"]) != 0)
+                return Unauthorized();
+
             return Ok(userRepository.GetAll());
         }
 
@@ -35,7 +38,12 @@ namespace Discite.API.Controllers
         [Authorize]
         public async Task<ActionResult<UserModel>> GetUser(int id)
         {
-            return userRepository.GetAll().SingleOrDefault(U => U.Id == id);
+            var user = userRepository.GetAll().SingleOrDefault(U => U.Id == id);
+            var uid = GetUid.uid(Request.Headers["Authorization"]);
+            if (uid != 0 || uid != user.Id)
+                return Unauthorized();
+
+            return user;
         }
 
         [HttpPost("register")]
