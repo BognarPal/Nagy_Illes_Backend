@@ -29,7 +29,7 @@ namespace ProjectDiscite.Data.Repositories
             }
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual List<T> GetAll()
         {
             return dbContext.Set<T>().ToList();
         }
@@ -43,7 +43,7 @@ namespace ProjectDiscite.Data.Repositories
 
         public virtual T Update(T model)
         {
-            dbContext.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            dbContext.Entry(model).State = EntityState.Modified;
             dbContext.SaveChanges();
             return model;
         }
