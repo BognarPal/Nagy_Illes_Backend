@@ -97,6 +97,9 @@ namespace Discite.API.Controllers
             if (!user.Hash.SequenceEqual(hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password))))
                 return Unauthorized("Invalid password");
 
+            user.LastActive = DateTime.Now;
+            userRepository.Update(user);
+
             return new UserDto
             {
                 Id = user.Id,
