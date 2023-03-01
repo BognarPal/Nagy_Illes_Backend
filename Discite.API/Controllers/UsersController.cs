@@ -32,7 +32,7 @@ namespace Discite.API.Controllers
             if (Request.uid() != 0)
                 return Unauthorized();
 
-            return Ok(userRepository.GetAll().Select(u => new UserDto() { Id = u.Id, Email = u.Email, Username = u.UserName }));
+            return Ok(userRepository.GetAll().Select(u => new UserDto { Id = u.Id, Email = u.Email, Username = u.UserName }));
         }
 
         [HttpGet("{id}")]
@@ -44,7 +44,7 @@ namespace Discite.API.Controllers
             if (!(uid == 0 || uid == user.Id))
                 return Unauthorized();
 
-            var ruser = new UserDto()
+            var ruser = new UserDto
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -57,6 +57,29 @@ namespace Discite.API.Controllers
 
             return ruser;
         }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> EditUser(RegisterDto registerDto)
+        {
+            if (Request.uid() != registerDto.Id)
+                return Unauthorized();
+
+            using var hmac = new HMACSHA256();
+
+            var user = new UserModel
+            {
+                Id = registerDto.Id,
+                Email = registerDto.Email,
+                UserName = registerDto.Username,
+                Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                Salt = hmac.Key
+            };
+
+            userRepository.Update(user);
+
+            return await GetUser(registerDto.Id);
+        } 
 
         [HttpPost("register")]
         [AllowAnonymous]
