@@ -39,7 +39,7 @@ namespace Discite.API.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            var user = userRepository.GetAll().SingleOrDefault(U => U.Id == id);
+            var user = userRepository[id];
             int uid = Request.uid();
             if (!(uid == 0 || uid == user.Id))
                 return Unauthorized();
