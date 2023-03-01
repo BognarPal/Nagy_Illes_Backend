@@ -4,6 +4,8 @@ namespace Discite.API.DTOs
 {
     public class RegisterDto
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(32, MinimumLength = 2)]
         public string Username { get; set; }
