@@ -62,14 +62,11 @@ namespace Discite.API.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> EditUser(RegisterDto registerDto)
         {
-            if (Request.uid() != registerDto.Id)
-                return Unauthorized();
-
             using var hmac = new HMACSHA256();
 
             var user = new UserModel
             {
-                Id = registerDto.Id,
+                Id = Request.uid(),
                 Email = registerDto.Email,
                 UserName = registerDto.Username,
                 Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
