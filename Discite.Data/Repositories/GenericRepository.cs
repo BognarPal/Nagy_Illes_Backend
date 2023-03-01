@@ -25,13 +25,18 @@ namespace ProjectDiscite.Data.Repositories
         {
             get
             {
-                return dbContext.Find<T>(i);
+                return dbContext.Set<T>().Find(i);
             }
         }
 
         public virtual List<T> GetAll()
         {
             return dbContext.Set<T>().ToList();
+        }
+
+        public virtual List<T> Find(Func<T, bool> predicate)
+        {
+            return dbContext.Set<T>().Where(predicate).ToList();
         }
 
         public virtual T Insert(T model)
