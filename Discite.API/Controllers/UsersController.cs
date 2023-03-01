@@ -75,7 +75,7 @@ namespace Discite.API.Controllers
 
             userRepository.Update(user);
 
-            return await GetUser(registerDto.Id);
+            return await GetUser(Request.uid());
         } 
 
         [HttpPost("register")]
