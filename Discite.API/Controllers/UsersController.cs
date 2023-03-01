@@ -73,9 +73,16 @@ namespace Discite.API.Controllers
                 Salt = hmac.Key
             };
 
-            userRepository.Update(user);
+            var uuser = userRepository.Update(user);
 
-            return await GetUser(Request.uid());
+            var ruser = new UserDto
+            {
+                Id = uuser.Id,
+                Email = uuser.Email,
+                Username = uuser.UserName
+            };
+
+            return ruser;
         } 
 
         [HttpPost("register")]
