@@ -3,6 +3,7 @@ using Discite.Data.Repositories;
 using Discite.API.DTOs;
 using RestSharp;
 using System.Net;
+using Microsoft.AspNetCore.Connections;
 
 namespace Discite.Test
 {
@@ -24,19 +25,58 @@ namespace Discite.Test
         }
 
         [Fact]
-        public void Register()
+        public void Users()
         {
-            var user = RegisterUser("asd");
+            var user = _RegisterUser("asd");
+            var admin = _RegisterAdmin("admin123");
+
+
 
         }
 
         [Fact]
-        public void EditProfile()
+        public void Runs()
+        {
+            var user = _RegisterUser("testuser_runs");
+
+            //new game
+            var run = _NewGame(user.Token);
+
+            run.Seed = new Random().Next();
+
+            run.Path = "UDDRL";
+
+
+            //save game
+
+
+            //load game
+
+
+            userRepository.Delete(user.Id);
+        }
+
+        [Fact]
+        public void Statistics()
         {
 
         }
 
-        private UserDto? Login(string email, string password) 
+        [Fact]
+        public void Configuration()
+        {
+
+        }
+
+        public GameDto? _NewGame(string token)
+        {
+            RestRequest request = new RestRequest("/api/runs", Method.Post);
+            request.AddHeader("Authentication", $"Bearer {token}");
+
+            return client.Post<GameDto>(request);
+        }
+
+        private UserDto? _Login(string email, string password) 
         {
             RestRequest request = new RestRequest("/api/users/login", Method.Post);
             request.AddJsonBody(new LoginDto { Email = email, Password = password });
@@ -44,7 +84,7 @@ namespace Discite.Test
             return client.Post<UserDto>(request);
         }
 
-        private UserDto? RegisterUser(string name)
+        private UserDto? _RegisterUser(string name)
         {
             RegisterDto registerDto = new RegisterDto() { Email = $"{name.ToLower()}@test.test", Password = name, Username = name };
 
@@ -55,9 +95,9 @@ namespace Discite.Test
             return client.Post<UserDto>(request);
         }
 
-        private UserDto? RegisterAdmin()
+        private UserDto? _RegisterAdmin(string name)
         {
-            var user = RegisterUser("admin");
+            var user = _RegisterUser(name);
             var user2 = userRepository[user.Id];
             user2.Id = 0;
             userRepository.Delete(user.Id);
