@@ -11,10 +11,9 @@ namespace Discite.Data.Repositories
 {
     public class WeaponRepository : GenericRepository<WeaponModel>
     {
-        public override IEnumerable<WeaponModel> GetAll()
+        public override List<WeaponModel> GetAll()
         {
             return dbContext.Set<WeaponModel>().Include(w => w.Runs).ToList();
-            //return dbContext.Set<WeaponModel>().Include(w => w.Runs).ThenInclude(r => r.Run).ToList();
         }
     }
 }
