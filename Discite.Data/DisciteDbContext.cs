@@ -20,7 +20,7 @@ namespace Discite.Data
 #if DEBUG
             if (string.IsNullOrWhiteSpace(connString))
                 optionsBuilder.UseMySql(
-                    "server=localhost;database=project_discite;uid=root;pwd=;",
+                    "server=localhost;database=project_discite;uid=root;pwd=;Convert Zero Datetime=True;",
                     ServerVersion.Create(10, 4, 24, ServerType.MariaDb)
                 );
             else

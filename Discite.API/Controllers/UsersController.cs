@@ -32,19 +32,19 @@ namespace Discite.API.Controllers
             if (Request.uid() != 0)
                 return Unauthorized();
 
-            return Ok(userRepository.GetAll().Select(u => new UserDto() { Id = u.Id, Email = u.Email, Username = u.UserName }));
+            return Ok(userRepository.GetAll().Select(u => new UserDto { Id = u.Id, Email = u.Email, Username = u.UserName }));
         }
 
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            var user = userRepository.GetAll().SingleOrDefault(U => U.Id == id);
+            var user = userRepository[id];
             int uid = Request.uid();
             if (!(uid == 0 || uid == user.Id))
                 return Unauthorized();
 
-            var ruser = new UserDto()
+            var ruser = new UserDto
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -57,6 +57,33 @@ namespace Discite.API.Controllers
 
             return ruser;
         }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> EditUser(RegisterDto registerDto)
+        {
+            using var hmac = new HMACSHA256();
+
+            var user = new UserModel
+            {
+                Id = Request.uid(),
+                Email = registerDto.Email,
+                UserName = registerDto.Username,
+                Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                Salt = hmac.Key
+            };
+
+            var uuser = userRepository.Update(user);
+
+            var ruser = new UserDto
+            {
+                Id = uuser.Id,
+                Email = uuser.Email,
+                Username = uuser.UserName
+            };
+
+            return ruser;
+        } 
 
         [HttpPost("register")]
         [AllowAnonymous]
@@ -96,6 +123,9 @@ namespace Discite.API.Controllers
 
             if (!user.Hash.SequenceEqual(hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password))))
                 return Unauthorized("Invalid password");
+
+            user.LastActive = DateTime.Now;
+            userRepository.Update(user);
 
             return new UserDto
             {
