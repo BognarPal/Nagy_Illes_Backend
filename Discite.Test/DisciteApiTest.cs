@@ -28,7 +28,6 @@ namespace Discite.Test
         public void Users()
         {
             var user = _RegisterUser("asd");
-            var admin = _RegisterAdmin("admin123");
 
 
 
@@ -93,16 +92,6 @@ namespace Discite.Test
             request.AddJsonBody(registerDto);
 
             return client.Post<UserDto>(request);
-        }
-
-        private UserDto? _RegisterAdmin(string name)
-        {
-            var user = _RegisterUser(name);
-            var user2 = userRepository[user.Id];
-            user2.Id = 0;
-            userRepository.Delete(user.Id);
-            userRepository.Insert(user2);
-            return new UserDto { Id= user2.Id, Email = user2.Email, Username = user2.UserName };
         }
     }
 }
