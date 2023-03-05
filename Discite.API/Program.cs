@@ -1,10 +1,32 @@
 using Discite.API.Interfaces;
 using Discite.API.Services;
-using Discite.Data;
+using Discite.Data.Models;
+using Discite.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 using System.Text;
+
+UserRepository userRepository = new();
+
+if (userRepository[0] == null)
+{
+    using var hmac = new HMACSHA256();
+    var user = new UserModel
+    {
+        Id = 0,
+        Email = "admin@discite.hu",
+        UserName = "Admin",
+        Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes("vML74L7eUnuKRMco")),
+        Salt = hmac.Key
+    };
+    var nuser = userRepository.Insert(user);
+
+    userRepository.Delete(nuser.Id);
+}
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,5 +94,4 @@ app.UseCors("EnableCORS");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
