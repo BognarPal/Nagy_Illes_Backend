@@ -4,6 +4,7 @@ using Discite.API.DTOs;
 using RestSharp;
 using System.Net;
 using Microsoft.AspNetCore.Connections;
+using Newtonsoft.Json.Linq;
 
 namespace Discite.Test
 {
@@ -58,16 +59,50 @@ namespace Discite.Test
         [Fact]
         public void Statistics()
         {
+            var toplist = client.Get<IEnumerable<ToplistDto>>(new RestRequest("/api/statistics/toplist", Method.Get));
+            var classes = client.Get<IEnumerable<ClassStatsDto>>(new RestRequest("/api/statistics/classes", Method.Get));
+            var weapons = client.Get<IEnumerable<WeaponStatsDto>>(new RestRequest("/api/statistics/weapons", Method.Get));
+            var enemies = client.Get<IEnumerable<EnemyStatsDto>>(new RestRequest("/api/statistics/enemies", Method.Get));
 
+            Assert.Equal(10, toplist.Count());
         }
 
         [Fact]
         public void Configuration()
         {
+            var user = _RegisterUser("testuser_config");
+            var admin = _Login("admin@discite.hu", "");
 
+            var oldConfig = _GetConfig();
+
+            Assert.NotNull(oldConfig);
+
+            var newConfig = oldConfig;
+
+            newConfig.Enemies.First().Name = "asd";
+
+            RestRequest _request = new RestRequest("/api/configuration", Method.Put);
+            _request.AddBody(newConfig);
+
+            var request = client.Put<ConfigurationDto>(_request);
+            Assert.Null(request);
+
+            _request.AddHeader("Authentication", $"Bearer {user.Token}");
+            request = client.Put<ConfigurationDto>(_request);
+            Assert.Null(request);
+
+            _request.AddHeader("Authentication", $"Bearer {admin.Token}");
+            request = client.Put<ConfigurationDto>(_request);
+            Assert.NotNull(request);
         }
 
-        public GameDto? _NewGame(string token)
+        private ConfigurationDto? _GetConfig()
+        {
+            var request = new RestRequest("/api/configuration", Method.Get);
+            return client.Get<ConfigurationDto>(request);
+        }
+
+        private GameDto? _NewGame(string token)
         {
             RestRequest request = new RestRequest("/api/runs", Method.Post);
             request.AddHeader("Authentication", $"Bearer {token}");
