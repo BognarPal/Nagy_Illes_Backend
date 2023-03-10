@@ -71,7 +71,7 @@ namespace Discite.Test
         public void Configuration()
         {
             var user = _RegisterUser("testuser_config");
-            var admin = _Login("admin@discite.hu", "");
+            var admin = _Login("admin@discite.xyz", "vML74L7eUnuKRMco");
 
             var oldConfig = _GetConfig();
 

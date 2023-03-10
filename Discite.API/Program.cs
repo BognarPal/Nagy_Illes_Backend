@@ -16,7 +16,7 @@ if (userRepository[0] == null)
     var user = new UserModel
     {
         Id = 0,
-        Email = "admin@discite.hu",
+        Email = "admin@discite.xyz",
         UserName = "Admin",
         Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes("vML74L7eUnuKRMco")),
         Salt = hmac.Key
