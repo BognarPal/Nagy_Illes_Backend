@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 
 
 
-#if DEBUG
+//#if DEBUG
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("EnableCORS", builder =>
@@ -26,7 +26,7 @@ builder.Services.AddCors(option =>
                .Build();
     });
 });
-#endif
+//#endif
 
 
 builder.Services.AddAuthentication(option =>
@@ -49,6 +49,11 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
+builder.Services.AddDbContext<DisciteDbContext>(options =>
+{
+    var conStr = builder.Configuration.GetConnectionString("db");
+    options.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -59,15 +64,15 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-#if DEBUG
+//#if DEBUG
 app.UseCors("EnableCORS");
-#endif
+//#endif
 
 app.UseAuthentication();
 app.UseAuthorization();
