@@ -28,10 +28,23 @@ namespace Discite.Test
         [Fact]
         public void Users()
         {
-            var user = _RegisterUser("asd");
+            UserDto? user;
+            user = _RegisterUser("asd");
+            Assert.Null(user);
 
+            user = _RegisterUser("testuser_register123");
+            var sUser = _RegisterUser("testuser_register123");
+            Assert.Null(sUser);
 
+            UserDto? lUser;
+            lUser = _Login("testuser_register123@test.test", "jhaskdfgjhabsdgzb");
+            Assert.Null(lUser);
+            lUser = _Login("testuser_register123@test.test", "testuser_register123");
 
+            Assert.NotEqual(user.Token, lUser.Token);
+
+            userRepository.Delete(user.Id);
+            userRepository.Delete(lUser.Id);
         }
 
         [Fact]
@@ -64,7 +77,15 @@ namespace Discite.Test
             var weapons = client.Get<IEnumerable<WeaponStatsDto>>(new RestRequest("/api/statistics/weapons", Method.Get));
             var enemies = client.Get<IEnumerable<EnemyStatsDto>>(new RestRequest("/api/statistics/enemies", Method.Get));
 
-            Assert.Equal(10, toplist.Count());
+            Assert.NotNull(toplist);
+            Assert.NotNull(classes);
+            Assert.NotNull(weapons);
+            Assert.NotNull(enemies);
+
+            Assert.True(toplist.Count() == 10);
+            Assert.True(classes.Count() > 0);
+            Assert.True(weapons.Count() > 0);
+            Assert.True(enemies.Count() > 0);
         }
 
         [Fact]
