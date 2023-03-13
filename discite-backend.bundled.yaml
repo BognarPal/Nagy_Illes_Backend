@@ -96,16 +96,12 @@ spec:
         - name: backend
           image: ghcr.io/jedlik-gyor/nagyilles-backend:1.0.0
           env:
-          - name: ConnectionStrings__moveyourbody
-            value: "Server=mysql-moveyourbody-cluster-ip-service.default.svc.cluster.local;Database=moveyourbody;Uid=root;Pwd=M0veY0urB@dy;"
-          - name: JwtConfig__secret
-            value: "kzwCbtqcOkSGzNEwLVQXEziDIQHsEDPRPUmsFtMv"
-          - name: JwtConfig__expirationInMinutes
-            value: "31"
-          - name: MySql__version
-            value: "10.7.3"
-          - name: MySql__type
-            value: "MariaDb"
+          - name: ConnectionStrings__db
+            value: "Server=mysql-nagy-illes-cluster-ip-service.default.svc.cluster.local;Database=project_discite;Uid=root;Pwd=V@r1S3cret;"
+          - name: JWT__Key
+            value: "ZQJPe7Ghu_v7M7kVy-WJhx6zAmlLuMECpjdguB5q616UjWtYuT-DzVOwfd8wiczoHbOtJIwevUrrTpIeRuSpXw"
+          - name: JWT__ExpireInMinute
+            value: "60"
           ports:
             - containerPort: 80
       imagePullSecrets:
