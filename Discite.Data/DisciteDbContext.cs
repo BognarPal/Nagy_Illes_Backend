@@ -12,20 +12,23 @@ namespace Discite.Data
 {
     public class DisciteDbContext: DbContext
     {
+        public DisciteDbContext()
+        { }
+
+        public DisciteDbContext(DbContextOptions<DisciteDbContext> options): base(options)
+        { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connString = ConfigurationManager.ConnectionStrings["project_discite"]?.ConnectionString;
-
 #if DEBUG
-            if (string.IsNullOrWhiteSpace(connString))
+            if (!optionsBuilder.IsConfigured)
+            {
                 optionsBuilder.UseMySql(
                     "server=localhost;database=project_discite;uid=root;pwd=;Convert Zero Datetime=True;",
                     ServerVersion.Create(10, 4, 24, ServerType.MariaDb)
                 );
-            else
+            }
 #endif
-                optionsBuilder.UseMySql(connString, ServerVersion.AutoDetect(connString));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
