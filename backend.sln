@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discite.Data", "Discite.Data\Discite.Data.csproj", "{8BEB6347-6791-4E9F-997B-876826F49024}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discite.API", "Discite.API\Discite.API.csproj", "{A402E28F-4275-4B98-B767-3080DAB69023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discite.API", "Discite.API\Discite.API.csproj", "{A402E28F-4275-4B98-B767-3080DAB69023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discite.Test", "Discite.Test\Discite.Test.csproj", "{3DEFA224-B91C-4EF1-A4DD-4284927281D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A402E28F-4275-4B98-B767-3080DAB69023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A402E28F-4275-4B98-B767-3080DAB69023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A402E28F-4275-4B98-B767-3080DAB69023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DEFA224-B91C-4EF1-A4DD-4284927281D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DEFA224-B91C-4EF1-A4DD-4284927281D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DEFA224-B91C-4EF1-A4DD-4284927281D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DEFA224-B91C-4EF1-A4DD-4284927281D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
