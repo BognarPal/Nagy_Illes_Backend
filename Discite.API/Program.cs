@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+DisciteDbContext.ConnectionString = builder.Configuration.GetConnectionString("db");
+
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("EnableCORS", builder =>
@@ -44,12 +46,6 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
-builder.Services.AddDbContext<DisciteDbContext>(options =>
-{
-    var conStr = builder.Configuration.GetConnectionString("db");
-    options.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
-});
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -59,7 +55,20 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
+app.UseSwagger(c =>
+{
+    c.RouteTemplate = "swagger/{documentName}/swagger.json";
+    c.PreSerializeFilters.Add((swagger, httpReq) =>
+    {
+        var oldPaths = swagger.Paths.ToDictionary(entry => entry.Key, entry => entry.Value);
+        foreach (var path in oldPaths)
+        {
+            swagger.Paths.Remove(path.Key);
+            swagger.Paths.Add(path.Key.Replace("api", "api/api"), path.Value);
+        }
+    });
+});
+
 app.UseSwaggerUI();
 
 app.UseCors("EnableCORS");

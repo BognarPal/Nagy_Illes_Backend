@@ -12,11 +12,7 @@ namespace Discite.Data
 {
     public class DisciteDbContext: DbContext
     {
-        public DisciteDbContext()
-        { }
-
-        public DisciteDbContext(DbContextOptions<DisciteDbContext> options): base(options)
-        { }
+        public static string ConnectionString { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +24,8 @@ namespace Discite.Data
                     ServerVersion.Create(10, 4, 24, ServerType.MariaDb)
                 );
             }
+#else
+            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
 #endif
         }
 
