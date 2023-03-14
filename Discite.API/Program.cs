@@ -60,7 +60,19 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(c =>
+    {
+        c.RouteTemplate = "swagger/{documentName}/swagger.json";
+        c.PreSerializeFilters.Add((swagger, httpReq) =>
+        {
+            var oldPaths = swagger.Paths.ToDictionary(entry => entry.Key, entry => entry.Value);
+            foreach (var path in oldPaths)
+            {
+                swagger.Paths.Remove(path.Key);
+                swagger.Paths.Add(path.Key.Replace("api", "api/api"), path.Value);
+            }
+        });
+    });
     app.UseSwaggerUI();
 }
 

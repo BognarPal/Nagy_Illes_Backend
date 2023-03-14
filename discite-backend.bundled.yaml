@@ -140,7 +140,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/jedlik-gyor/nagyilles-backend:1.0.1
+          image: ghcr.io/jedlik-gyor/nagyilles-backend:1.0.2
           env:
           - name: ConnectionStrings__db
             value: "Server=mysql-nagy-illes-cluster-ip-service.default.svc.cluster.local;Database=project_discite;Uid=root;Pwd=V@r1S3cret;"
