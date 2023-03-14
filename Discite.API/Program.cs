@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-
+DisciteDbContext.ConnectionString = builder.Configuration.GetConnectionString("db");
 
 //#if DEBUG
 builder.Services.AddCors(option =>
@@ -47,12 +47,6 @@ builder.Services.AddAuthentication(option =>
         ValidAudience = builder.Configuration["JWT:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
-});
-
-builder.Services.AddDbContext<DisciteDbContext>(options =>
-{
-    var conStr = builder.Configuration.GetConnectionString("db");
-    options.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
