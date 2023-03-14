@@ -67,6 +67,7 @@ namespace Discite.Test
 
             var request = new RestRequest("/api/runs", Method.Put);
             request.AddHeader("Authentication", $"Bearer {user.Token}");
+            request.AddJsonBody<GameDto>(run);
             client.Put<GameDto>(request);
 
             var request2 = new RestRequest($"/api/runs/{run.Id}", Method.Get);
