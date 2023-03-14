@@ -1,5 +1,6 @@
 using Discite.Data.Models;
 using Discite.Data.Repositories;
+using Discite.Data.Enums;
 using Discite.API.DTOs;
 using RestSharp;
 using System.Net;
@@ -52,19 +53,33 @@ namespace Discite.Test
         {
             var user = _RegisterUser("testuser_runs");
 
-            //new game
+            Assert.NotNull(user);
+
             var run = _NewGame(user.Token);
-
+            Assert.NotNull(run);
             run.Seed = new Random().Next();
-
             run.Path = "UDDRL";
+            run.Gold = 10;
+            run.ClassId = 2;
+            run.CurrentHp = 50f;
+            run.Score = 1000;
+            run.Status = RunStatus.Alive;
 
+            var request = new RestRequest("/api/runs", Method.Put);
+            request.AddHeader("Authentication", $"Bearer {user.Token}");
+            client.Put<GameDto>(request);
 
-            //save game
+            var request2 = new RestRequest($"/api/runs/{run.Id}", Method.Get);
+            request2.AddHeader("Authentication", $"Bearer {user.Token}");
+            var run2 = client.Get<GameDto>(request);
+            Assert.NotNull(run2);
 
-
-            //load game
-
+            Assert.True(run.Seed == run2.Seed);
+            Assert.True(run.Path == run2.Path);
+            Assert.True(run.ClassId == run2.ClassId);
+            Assert.True(run.CurrentHp == run2.CurrentHp);
+            Assert.True(run.Score == run2.Score);
+            Assert.True(run.Status == run2.Status);
 
             userRepository.Delete(user.Id);
         }
