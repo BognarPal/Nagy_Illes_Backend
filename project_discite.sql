@@ -7291,6 +7291,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Id`, `UserName`, `Email`, `Hash`, `Salt`, `register_date`, `LastActive`) VALUES
+(0, 'Admin', 'admin@discite.xyz', 0xad6351243c472e6797f361f759a521fd74b11c5ccbaa186ea3704844dca1c033, 0x38493b7131b51c75a4f467c0e098c988711fee3afc8f4283e499f78eec80388094a296a1fe5e82293b7796b32c84362c755209d3490b2b00d4fe3ca683019f79, '2023-03-15 07:10:11.701265', '2023-03-15 07:10:11.701267');
 (1, 'RAbmCtgQihHI', 'RAbmCtgQihHI@vwyuomail.hu', 0x9af26b9cc14c98e6edce7428f8ebddfbf9a3f63b0aed3aaa7514a322b0617462, 0x5652c14759b2f8b111fde1dd9e215d97, '2023-02-15 04:23:40.000000', '2023-02-26 12:31:34.000000'),
 (2, 'mqZVulnbKxe', 'mqZVulnbKxe@zhealmail.ro', 0x3ae71963a0e4a756b2fe36e66b12ac9c6baccf8d44a09fcf53ef43a71d7ffc7b, 0x10b1dbe6b3001dcf846b11f98a65c4c1, '2022-05-08 08:05:20.000000', '2023-01-25 15:11:21.000000'),
 (3, 'dOwKBWoqyfaxf', 'dOwKBWoqyfaxf@mtaufmail.hu', 0xc46619be99f862e154ce613687eeb6d32406e0ebc1bd4c384b37d36fd1788bca, 0x598432543f4c70798ca36fa06482e25b, '2022-09-29 00:16:12.000000', '2023-01-14 17:15:20.000000'),

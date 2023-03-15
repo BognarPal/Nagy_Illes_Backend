@@ -1,5 +1,6 @@
 using Discite.API.Interfaces;
 using Discite.API.Services;
+using Discite.Data;
 using Discite.Data.Models;
 using Discite.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
