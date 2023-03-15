@@ -19,10 +19,10 @@ namespace Discite.Data.Models
         public int Gold { get; set; }
         public int Score { get; set; }
         public int Runtime { get; set; }
-        public RunStatus Status { get; set; }
+        public RunStatus Status { get; set; } = RunStatus.Alive;
         [Column("version")]
-        public string GameVersion { get; set; }
-        public DateTime StartDate { get; set; }
+        public string GameVersion { get; set; } = "1.0.0";
+        public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; }
         public float CurrentHp { get; set; }
         public int Seed { get; set; }

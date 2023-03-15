@@ -6,13 +6,15 @@ using RestSharp;
 using System.Net;
 using Microsoft.AspNetCore.Connections;
 using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 namespace Discite.Test
 {
     public class DisciteApiTest : IDisposable
     {
         UserRepository userRepository;
-        string url = "http://localhost:5100";
+        RunRepository runRepository;
+        string url = "http://localhost:5241";
         readonly RestClient client;
 
         public DisciteApiTest()
@@ -29,20 +31,14 @@ namespace Discite.Test
         [Fact]
         public void Users()
         {
-            UserDto? user;
-            user = _RegisterUser("asd");
-            Assert.Null(user);
+            Assert.Throws<HttpRequestException>(() => _RegisterUser("a"));
 
-            user = _RegisterUser("testuser_register123");
-            var sUser = _RegisterUser("testuser_register123");
-            Assert.Null(sUser);
+            var user = _RegisterUser("testuser_register123");
+            Assert.Throws<JsonException>(() => _RegisterUser("testuser_register123"));
+            Assert.Throws<JsonException>(() => _Login("testuser_register123@test.test", "jhaskdfgjhabsdgzb"));
+            var lUser = _Login("testuser_register123@test.test", "testuser_register123");
 
-            UserDto? lUser;
-            lUser = _Login("testuser_register123@test.test", "jhaskdfgjhabsdgzb");
-            Assert.Null(lUser);
-            lUser = _Login("testuser_register123@test.test", "testuser_register123");
-
-            Assert.NotEqual(user.Token, lUser.Token);
+            Assert.Equal(user.Token, lUser.Token);
 
             userRepository.Delete(user.Id);
             userRepository.Delete(lUser.Id);
@@ -66,13 +62,13 @@ namespace Discite.Test
             run.Status = RunStatus.Alive;
 
             var request = new RestRequest("/api/runs", Method.Put);
-            request.AddHeader("Authentication", $"Bearer {user.Token}");
+            request.AddHeader("Authorization", $"Bearer {user.Token}");
             request.AddJsonBody<GameDto>(run);
             client.Put<GameDto>(request);
 
             var request2 = new RestRequest($"/api/runs/{run.Id}", Method.Get);
-            request2.AddHeader("Authentication", $"Bearer {user.Token}");
-            var run2 = client.Get<GameDto>(request);
+            request2.AddHeader("Authorization", $"Bearer {user.Token}");
+            var run2 = client.Get<GameDto>(request2);
             Assert.NotNull(run2);
 
             Assert.True(run.Seed == run2.Seed);
@@ -83,6 +79,7 @@ namespace Discite.Test
             Assert.True(run.Status == run2.Status);
 
             userRepository.Delete(user.Id);
+            runRepository.Delete(run.Id);
         }
 
         [Fact]
@@ -109,7 +106,6 @@ namespace Discite.Test
         {
             var user = _RegisterUser("testuser_config");
             var admin = _Login("admin@discite.xyz", "vML74L7eUnuKRMco");
-
             var oldConfig = _GetConfig();
 
             Assert.NotNull(oldConfig);
@@ -121,16 +117,16 @@ namespace Discite.Test
             RestRequest _request = new RestRequest("/api/configuration", Method.Put);
             _request.AddBody(newConfig);
 
+            Assert.Throws<HttpRequestException>(() => client.Put<ConfigurationDto>(_request));
+
+            _request.AddHeader("Authorization", $"Bearer {user.Token}");
+            Assert.Throws<HttpRequestException>(() => client.Put<ConfigurationDto>(_request));
+
+            _request.AddOrUpdateHeader("Authorization", $"Bearer {admin.Token}");
             var request = client.Put<ConfigurationDto>(_request);
-            Assert.Null(request);
-
-            _request.AddHeader("Authentication", $"Bearer {user.Token}");
-            request = client.Put<ConfigurationDto>(_request);
-            Assert.Null(request);
-
-            _request.AddHeader("Authentication", $"Bearer {admin.Token}");
-            request = client.Put<ConfigurationDto>(_request);
             Assert.NotNull(request);
+
+            userRepository.Delete(user.Id);
         }
 
         private ConfigurationDto? _GetConfig()
@@ -142,7 +138,7 @@ namespace Discite.Test
         private GameDto? _NewGame(string token)
         {
             RestRequest request = new RestRequest("/api/runs", Method.Post);
-            request.AddHeader("Authentication", $"Bearer {token}");
+            request.AddHeader("Authorization", $"Bearer {token}");
 
             return client.Post<GameDto>(request);
         }
