@@ -39,7 +39,7 @@ namespace Discite.API.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            var user = userRepository[id];
+            var user = userRepository.GetAll().SingleOrDefault(u => u.Id == id);
             int uid = Request.uid();
             if (!(uid == 0 || uid == user.Id))
                 return Unauthorized();
@@ -51,8 +51,8 @@ namespace Discite.API.Controllers
                 Username = user.UserName,
                 RegisterDate = user.RegisterDate,
                 LastActive = user.LastActive,
-                Classes = user.Classes.Select(u => u.Id),
-                Runs = user.Runs.Select(r => r.Id)
+                Classes = user.Classes != null ? user.Classes.Select(u => u.Id) : null,
+                Runs = user.Runs != null ? user.Runs.Select(r => r.Id) : null
             };
 
             return ruser;
