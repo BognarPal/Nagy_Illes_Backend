@@ -32,7 +32,7 @@ namespace Discite.API.Controllers
             if (Request.uid() != 0)
                 return Unauthorized();
 
-            return Ok(userRepository.GetAll().Select(u => new UserDto { Id = u.Id, Email = u.Email, Username = u.UserName }));
+            return Ok(userRepository.GetAll().Select(u => new UserDto { Id = u.Id, Email = u.Email, Username = u.UserName, RegisterDate = u.RegisterDate, LastActive = u.LastActive }));
         }
 
         [HttpGet("{id}")]
