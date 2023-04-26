@@ -21,6 +21,7 @@ namespace Discite.Test
         {
             this.client = new RestClient(url);
             this.userRepository = new UserRepository();
+            this.runRepository = new RunRepository();
         }
 
         public void Dispose()

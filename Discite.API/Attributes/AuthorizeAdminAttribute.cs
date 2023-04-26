@@ -9,7 +9,7 @@ namespace Discite.API.Attributes
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (context.HttpContext.Request.uid() == 0)
+            if (context.HttpContext.Request.uid() != 0)
             {
                 context.Result = new UnauthorizedResult();
             }

@@ -90,7 +90,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter 'Bearer' followed by a space and then your token in the text input below.",
+        Description = "Enter your token in the text input below.",
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement 
     {
