@@ -4,6 +4,7 @@ using Discite.Data.Repositories;
 using Discite.Data.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Discite.API.Attributes;
 
 namespace Discite.API.Controllers
 {

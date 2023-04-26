@@ -9,6 +9,7 @@ using Discite.API.Services;
 using Discite.API.Extensions;
 using Swashbuckle.Swagger.Annotations;
 using Microsoft.AspNetCore.Components.Forms;
+using Discite.API.Attributes;
 
 namespace Discite.API.Controllers
 {
@@ -48,15 +49,12 @@ namespace Discite.API.Controllers
         /// Update game configuration
         /// </summary>
         [HttpPut]
-        [Authorize]
+        [AuthorizeAdmin]
         [Route("api/config")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ConfigurationDto> EditConfig(ConfigurationDto config)
         {
-            if (Request.uid() != 0)
-                return Unauthorized();
-
             foreach (var w in config.Weapons)
                 weaponRepository.Update(new WeaponModel() { Id = w.Id, Name = w.Name, Damage = w.Damage, Speed = w.Speed });
 

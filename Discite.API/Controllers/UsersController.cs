@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Discite.API.Extensions;
+using Discite.API.Attributes;
 
 namespace Discite.API.Controllers
 {
@@ -29,15 +30,12 @@ namespace Discite.API.Controllers
         /// Get all user
         /// </summary>
         [HttpGet]
-        [Authorize]
+        [AuthorizeAdmin]
         [Route("api/user")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<UserDto>> GetUsers()
         {
-            if (Request.uid() != 0)
-                return Unauthorized();
-
             return Ok(userRepository.GetAll().Select(u => new UserDto { Id = u.Id, Email = u.Email, Username = u.UserName, RegisterDate = u.RegisterDate, LastActive = u.LastActive }));
         }
 
@@ -169,14 +167,10 @@ namespace Discite.API.Controllers
         /// </summary>
         [HttpDelete]
         [Route("api/user/{id}")]
-        [Authorize]
+        [AuthorizeAdmin]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult BanUser([FromRoute] int id)
         {
-            if (Request.uid() != 0)
-            {
-                return Unauthorized();
-            }
             return Ok();
         }
     }

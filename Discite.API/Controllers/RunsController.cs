@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Discite.API.Services;
 using Discite.API.Extensions;
 using Discite.API.DTOs;
+using Discite.API.Attributes;
 
 namespace Discite.API.Controllers
 {
