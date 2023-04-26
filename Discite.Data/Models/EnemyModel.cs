@@ -12,9 +12,8 @@ namespace Discite.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public float MaxHp { get; set; }
+        public float Health { get; set; }
         public float Damage { get; set; }
-        public float Energy { get; set; }
         public float Speed { get; set; }
 
         public ICollection<RunEnemyModel> Runs { get; set; }

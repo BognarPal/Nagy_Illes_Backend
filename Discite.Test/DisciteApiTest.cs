@@ -86,17 +86,14 @@ namespace Discite.Test
         public void Statistics()
         {
             var toplist = client.Get<IEnumerable<ToplistDto>>(new RestRequest("/api/statistics/toplist", Method.Get));
-            var classes = client.Get<IEnumerable<ClassStatsDto>>(new RestRequest("/api/statistics/classes", Method.Get));
             var weapons = client.Get<IEnumerable<WeaponStatsDto>>(new RestRequest("/api/statistics/weapons", Method.Get));
             var enemies = client.Get<IEnumerable<EnemyStatsDto>>(new RestRequest("/api/statistics/enemies", Method.Get));
 
             Assert.NotNull(toplist);
-            Assert.NotNull(classes);
             Assert.NotNull(weapons);
             Assert.NotNull(enemies);
 
             Assert.True(toplist.Count() == 10);
-            Assert.True(classes.Count() > 0);
             Assert.True(weapons.Count() > 0);
             Assert.True(enemies.Count() > 0);
         }

@@ -8,7 +8,7 @@
         public string Token { get; set; }
         public DateTime RegisterDate { get; set; }
         public DateTime LastActive { get; set; }
-        public IEnumerable<int>? Runs { get; set; }
-        public IEnumerable<int>? Classes { get; set; }
+        public IEnumerable<int> Runs { get; set; }
+        public IEnumerable<int> Classes { get; set; }
     }
 }

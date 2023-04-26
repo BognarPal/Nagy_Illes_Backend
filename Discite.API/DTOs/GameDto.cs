@@ -21,7 +21,6 @@ namespace Discite.API.DTOs
         public int Seed { get; set; }
 
         public ICollection<RunArtifactModel> Artifacts { get; set; }
-        public ICollection<RunRoomModel> Rooms { get; set; }
         public ICollection<RunWeaponModel> Weapons { get; set; }
         public ICollection<RunEnemyModel> Enemies { get; set; }
     }

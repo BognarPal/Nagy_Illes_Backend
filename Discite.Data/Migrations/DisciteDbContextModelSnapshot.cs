@@ -25,12 +25,11 @@ namespace Discite.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxLevel")
-                        .HasColumnType("int")
-                        .HasColumnName("upgrade_level");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
+
+                    b.Property<float>("Power")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -40,102 +39,26 @@ namespace Discite.Data.Migrations
                         new
                         {
                             Id = 1,
-                            MaxLevel = 3,
-                            Name = "Flammable blood"
+                            Name = "Flammable blood",
+                            Power = 3f
                         },
                         new
                         {
                             Id = 2,
-                            MaxLevel = 3,
-                            Name = "Poisonous blood"
+                            Name = "Poisonous blood",
+                            Power = 3f
                         },
                         new
                         {
                             Id = 3,
-                            MaxLevel = 3,
-                            Name = "Exploding corpses"
+                            Name = "Exploding corpses",
+                            Power = 3f
                         },
                         new
                         {
                             Id = 4,
-                            MaxLevel = 3,
-                            Name = "Revenge damage"
-                        });
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.ClassArtifactModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArtifactId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtifactId");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("class_artifact");
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.ClassModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<float>("Damage")
-                        .HasColumnType("float");
-
-                    b.Property<float>("Energy")
-                        .HasColumnType("float");
-
-                    b.Property<float>("MaxHp")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<float>("Speed")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("class");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Damage = 5f,
-                            Energy = 160f,
-                            MaxHp = 70f,
-                            Name = "Artificier",
-                            Speed = 1f
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Damage = 4f,
-                            Energy = 100f,
-                            MaxHp = 120f,
-                            Name = "Weapon Master",
-                            Speed = 1f
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Damage = 4f,
-                            Energy = 130f,
-                            MaxHp = 90f,
-                            Name = "Cyber Ninja",
-                            Speed = 2f
+                            Name = "Revenge damage",
+                            Power = 3f
                         });
                 });
 
@@ -148,10 +71,7 @@ namespace Discite.Data.Migrations
                     b.Property<float>("Damage")
                         .HasColumnType("float");
 
-                    b.Property<float>("Energy")
-                        .HasColumnType("float");
-
-                    b.Property<float>("MaxHp")
+                    b.Property<float>("Health")
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
@@ -169,8 +89,7 @@ namespace Discite.Data.Migrations
                         {
                             Id = 1,
                             Damage = 10f,
-                            Energy = 0f,
-                            MaxHp = 20f,
+                            Health = 20f,
                             Name = "Ghoul",
                             Speed = 0.7f
                         },
@@ -178,8 +97,7 @@ namespace Discite.Data.Migrations
                         {
                             Id = 2,
                             Damage = 25f,
-                            Energy = 0f,
-                            MaxHp = 5f,
+                            Health = 5f,
                             Name = "Exploder",
                             Speed = 1f
                         },
@@ -187,8 +105,7 @@ namespace Discite.Data.Migrations
                         {
                             Id = 3,
                             Damage = 20f,
-                            Energy = 0f,
-                            MaxHp = 35f,
+                            Health = 35f,
                             Name = "Cyber Ghoul",
                             Speed = 1.5f
                         },
@@ -196,8 +113,7 @@ namespace Discite.Data.Migrations
                         {
                             Id = 4,
                             Damage = 10f,
-                            Energy = 0f,
-                            MaxHp = 60f,
+                            Health = 60f,
                             Name = "Multi-tank",
                             Speed = 0.5f
                         },
@@ -205,8 +121,7 @@ namespace Discite.Data.Migrations
                         {
                             Id = 5,
                             Damage = 15f,
-                            Energy = 0f,
-                            MaxHp = 20f,
+                            Health = 20f,
                             Name = "Agent",
                             Speed = 0.7f
                         },
@@ -214,51 +129,9 @@ namespace Discite.Data.Migrations
                         {
                             Id = 6,
                             Damage = 15f,
-                            Energy = 0f,
-                            MaxHp = 200f,
+                            Health = 200f,
                             Name = "Chimera",
                             Speed = 1.2f
-                        });
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.RoomModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("eventroom");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Entry room"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Exit room"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Encounter room"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Shop room"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Boss room"
                         });
                 });
 
@@ -271,16 +144,13 @@ namespace Discite.Data.Migrations
                     b.Property<int>("ArtifactId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Picked")
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Power")
                         .HasColumnType("int");
 
                     b.Property<int>("RunId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Seen")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Used")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -328,24 +198,11 @@ namespace Discite.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClassId")
-                        .HasColumnType("int");
-
                     b.Property<float>("CurrentHp")
                         .HasColumnType("float");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("GameVersion")
-                        .HasColumnType("longtext")
-                        .HasColumnName("version");
-
-                    b.Property<int>("Gold")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("longtext");
 
                     b.Property<int>("Runtime")
                         .HasColumnType("int");
@@ -353,49 +210,17 @@ namespace Discite.Data.Migrations
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<int>("Seed")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("run");
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.RunRoomModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RunId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Seen")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("RunId");
-
-                    b.ToTable("run_room");
                 });
 
             modelBuilder.Entity("Discite.Data.Models.RunWeaponModel", b =>
@@ -410,9 +235,6 @@ namespace Discite.Data.Migrations
                     b.Property<int>("RunId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Seen")
-                        .HasColumnType("int");
-
                     b.Property<int>("WeaponId")
                         .HasColumnType("int");
 
@@ -423,27 +245,6 @@ namespace Discite.Data.Migrations
                     b.HasIndex("WeaponId");
 
                     b.ToTable("run_weapon");
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.UserClassModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("user_class");
                 });
 
             modelBuilder.Entity("Discite.Data.Models.UserModel", b =>
@@ -464,8 +265,7 @@ namespace Discite.Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("register_date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<byte[]>("Salt")
                         .IsRequired()
@@ -492,14 +292,14 @@ namespace Discite.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<float>("AttackSpeed")
-                        .HasColumnType("float");
-
                     b.Property<float>("Damage")
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
+
+                    b.Property<float>("Speed")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -509,57 +309,38 @@ namespace Discite.Data.Migrations
                         new
                         {
                             Id = 1,
-                            AttackSpeed = 1.5f,
                             Damage = 3f,
-                            Name = "Katana"
+                            Name = "Katana",
+                            Speed = 1.5f
                         },
                         new
                         {
                             Id = 2,
-                            AttackSpeed = 1f,
                             Damage = 4f,
-                            Name = "Spear"
+                            Name = "Spear",
+                            Speed = 1f
                         },
                         new
                         {
                             Id = 3,
-                            AttackSpeed = 0.7f,
                             Damage = 6f,
-                            Name = "Deagle"
+                            Name = "Deagle",
+                            Speed = 0.7f
                         },
                         new
                         {
                             Id = 4,
-                            AttackSpeed = 3f,
                             Damage = 1f,
-                            Name = "Laser SMG"
+                            Name = "Laser SMG",
+                            Speed = 3f
                         },
                         new
                         {
                             Id = 5,
-                            AttackSpeed = 0.5f,
                             Damage = 1f,
-                            Name = "Shotgun"
+                            Name = "Shotgun",
+                            Speed = 0.5f
                         });
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.ClassArtifactModel", b =>
-                {
-                    b.HasOne("Discite.Data.Models.ArtifactModel", "Artifact")
-                        .WithMany("Classes")
-                        .HasForeignKey("ArtifactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Discite.Data.Models.ClassModel", "Class")
-                        .WithMany("Artifacts")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Artifact");
-
-                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Discite.Data.Models.RunArtifactModel", b =>
@@ -602,38 +383,13 @@ namespace Discite.Data.Migrations
 
             modelBuilder.Entity("Discite.Data.Models.RunModel", b =>
                 {
-                    b.HasOne("Discite.Data.Models.ClassModel", "Class")
-                        .WithMany()
-                        .HasForeignKey("ClassId");
-
                     b.HasOne("Discite.Data.Models.UserModel", "User")
                         .WithMany("Runs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Class");
-
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.RunRoomModel", b =>
-                {
-                    b.HasOne("Discite.Data.Models.RoomModel", "Room")
-                        .WithMany("Runs")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Discite.Data.Models.RunModel", "Run")
-                        .WithMany("Rooms")
-                        .HasForeignKey("RunId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-
-                    b.Navigation("Run");
                 });
 
             modelBuilder.Entity("Discite.Data.Models.RunWeaponModel", b =>
@@ -655,45 +411,12 @@ namespace Discite.Data.Migrations
                     b.Navigation("Weapon");
                 });
 
-            modelBuilder.Entity("Discite.Data.Models.UserClassModel", b =>
-                {
-                    b.HasOne("Discite.Data.Models.ClassModel", "Class")
-                        .WithMany("Users")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Discite.Data.Models.UserModel", "User")
-                        .WithMany("Classes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Discite.Data.Models.ArtifactModel", b =>
                 {
-                    b.Navigation("Classes");
-
                     b.Navigation("Runs");
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.ClassModel", b =>
-                {
-                    b.Navigation("Artifacts");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Discite.Data.Models.EnemyModel", b =>
-                {
-                    b.Navigation("Runs");
-                });
-
-            modelBuilder.Entity("Discite.Data.Models.RoomModel", b =>
                 {
                     b.Navigation("Runs");
                 });
@@ -704,15 +427,11 @@ namespace Discite.Data.Migrations
 
                     b.Navigation("Enemies");
 
-                    b.Navigation("Rooms");
-
                     b.Navigation("Weapons");
                 });
 
             modelBuilder.Entity("Discite.Data.Models.UserModel", b =>
                 {
-                    b.Navigation("Classes");
-
                     b.Navigation("Runs");
                 });
 

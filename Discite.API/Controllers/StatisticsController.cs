@@ -11,26 +11,27 @@ namespace Discite.API.Controllers
     {
         UserRepository userRepository;
         EnemyRepository enemyRepository;
-        RoomRepository roomRepository;
         WeaponRepository weaponRepository;
         RunRepository runRepository;
-        ClassRepository classRepository;
         ArtifactRepository artifactRepository;
 
         public StatisticsController() 
         {
             userRepository = new UserRepository();
             enemyRepository = new EnemyRepository();
-            roomRepository = new RoomRepository();
             weaponRepository = new WeaponRepository();
             runRepository = new RunRepository();
-            classRepository = new ClassRepository();
             artifactRepository = new ArtifactRepository();
         }
-
-        [HttpGet("toplist")]
+        /// <summary>
+        /// Top 10 player
+        /// </summary>
+        [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<ToplistDto> TopPlayers()
+        [Route("api/stats/toplist")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<ToplistDto>> TopPlayers()
         {
             var users = userRepository.GetAll().OrderByDescending(u => u.Runs.Sum(r => r.Score)).Take(10);
 
@@ -41,48 +42,42 @@ namespace Discite.API.Controllers
                 Score = x.Runs.Sum(r => r.Score)
             });
 
-            return tops;
+            return Ok(tops);
         }
 
-        [HttpGet("classes")]
+        /// <summary>
+        /// Statistics about weapons
+        /// </summary>
+        [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<ClassStatsDto> Classes()
-        {
-            var classes = classRepository.GetAll().Select(c => new ClassStatsDto()
-            {
-                Id = c.Id,
-                Owned = c.Users.Count(),
-                Used = runRepository.GetAll().Count(r => r.Class.Id == c.Id),
-                Deaths = runRepository.GetAll().Count(r => r.Class.Id == c.Id && r.Status == RunStatus.Dead),
-                Kills = runRepository.GetAll().Where(r => r.Class.Id == c.Id).Sum(r => r.Enemies.Sum(e => e.Deaths))
-            });
-            
-            return classes;
-        }
-
-        [HttpGet("weapons")]
-        [AllowAnonymous]
+        [Route("api/stats/weapons")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<WeaponStatsDto> Weapons()
         {
             var weapons = weaponRepository.GetAll().Select(w => new WeaponStatsDto()
             {
                 Id = w.Id,
                 Picked = w.Runs.Sum(r => r.Picked), 
-                Seen = w.Runs.Sum(r => r.Seen)
             });
 
             return weapons;
         }
 
-        [HttpGet("enemies")]
+        /// <summary>
+        /// Statistics about enemies
+        /// </summary>
+        [HttpGet]
         [AllowAnonymous]
+        [Route("api/stats/enemies")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<EnemyStatsDto> Enemies()
         {
             var enemies = enemyRepository.GetAll().Select(e => new EnemyStatsDto()
             {
                 Id = e.Id,
                 Deaths = e.Runs.Sum(r => r.Deaths),
-                Kills = e.Runs.Count(r => r.Run.Status == RunStatus.Dead)
             });
 
             return enemies;

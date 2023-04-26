@@ -12,6 +12,16 @@ namespace Discite.Data
 {
     public class DisciteDbContext: DbContext
     {
+        public DbSet<ArtifactModel> Artifacts { get; set; }
+        public DbSet<WeaponModel> Weapons { get; set; }
+        public DbSet<EnemyModel> Enemies { get; set; }
+        public DbSet<RunModel> Runs { get; set; }
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<RunArtifactModel> RunArtifacts { get; set; }
+        public DbSet<RunEnemyModel> RunEnemies { get; set; }
+        public DbSet<RunWeaponModel> RunWeaopns { get; set; }
+
+
         public static string ConnectionString { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,9 +45,6 @@ namespace Discite.Data
             modelBuilder.Entity<UserModel>().HasIndex(e => e.Email).IsUnique();
             modelBuilder.Entity<UserModel>().HasIndex(e => e.UserName).IsUnique();
 
-            modelBuilder.Entity<ClassArtifactModel>().HasOne(e => e.Class).WithMany(e => e.Artifacts).HasForeignKey(e => e.ClassId);
-            modelBuilder.Entity<ClassArtifactModel>().HasOne(e => e.Artifact).WithMany(e => e.Classes).HasForeignKey(e => e.ArtifactId);
-
             modelBuilder.Entity<RunArtifactModel>().HasOne(e => e.Run).WithMany(e => e.Artifacts).HasForeignKey(e => e.RunId);
             modelBuilder.Entity<RunArtifactModel>().HasOne(e => e.Artifact).WithMany(e => e.Runs).HasForeignKey(e => e.ArtifactId);
 
@@ -47,54 +54,32 @@ namespace Discite.Data
             modelBuilder.Entity<RunWeaponModel>().HasOne(e => e.Run).WithMany(e => e.Weapons).HasForeignKey(e => e.RunId);
             modelBuilder.Entity<RunWeaponModel>().HasOne(e => e.Weapon).WithMany(e => e.Runs).HasForeignKey(e => e.WeaponId);
 
-            modelBuilder.Entity<RunRoomModel>().HasOne(e => e.Run).WithMany(e => e.Rooms).HasForeignKey(e => e.RunId);
-            modelBuilder.Entity<RunRoomModel>().HasOne(e => e.Room).WithMany(e => e.Runs).HasForeignKey(e => e.RoomId);
-
-            modelBuilder.Entity<UserClassModel>().HasOne(e => e.User).WithMany(e => e.Classes).HasForeignKey(e => e.UserId);
-            modelBuilder.Entity<UserClassModel>().HasOne(e => e.Class).WithMany(e => e.Users).HasForeignKey(e => e.ClassId);
-
 
             modelBuilder.Entity<EnemyModel>().HasData
             (
-                new EnemyModel() { Id = 1, Name = "Ghoul", MaxHp = 20, Damage = 10, Energy = 0, Speed = 0.7f },
-                new EnemyModel() { Id = 2, Name = "Exploder", MaxHp = 5, Damage = 25, Energy = 0, Speed = 1 },
-                new EnemyModel() { Id = 3, Name = "Cyber Ghoul", MaxHp = 35, Damage = 20, Energy = 0, Speed = 1.5f },
-                new EnemyModel() { Id = 4, Name = "Multi-tank", MaxHp = 60, Damage = 10, Energy = 0, Speed = 0.5f },
-                new EnemyModel() { Id = 5, Name = "Agent", MaxHp = 20, Damage = 15, Energy = 0, Speed = 0.7f },
-                new EnemyModel() { Id = 6, Name = "Chimera", MaxHp = 200, Damage = 15, Energy = 0, Speed = 1.2f }
-            );
-
-            modelBuilder.Entity<ClassModel>().HasData
-            (
-                new ClassModel() { Id = 1, Name = "Artificier", MaxHp = 70, Damage = 5, Energy = 160, Speed = 1 },
-                new ClassModel() { Id = 2, Name = "Weapon Master", MaxHp = 120, Damage = 4, Energy = 100, Speed = 1 },
-                new ClassModel() { Id = 3, Name = "Cyber Ninja", MaxHp = 90, Damage = 4, Energy = 130, Speed = 2 }
+                new EnemyModel() { Id = 1, Name = "Ghoul", Health = 20, Damage = 10, Speed = 0.7f },
+                new EnemyModel() { Id = 2, Name = "Exploder", Health = 5, Damage = 25, Speed = 1 },
+                new EnemyModel() { Id = 3, Name = "Cyber Ghoul", Health = 35, Damage = 20, Speed = 1.5f },
+                new EnemyModel() { Id = 4, Name = "Multi-tank", Health = 60, Damage = 10, Speed = 0.5f },
+                new EnemyModel() { Id = 5, Name = "Agent", Health = 20, Damage = 15, Speed = 0.7f },
+                new EnemyModel() { Id = 6, Name = "Chimera", Health = 200, Damage = 15, Speed = 1.2f }
             );
 
             modelBuilder.Entity<WeaponModel>().HasData
             (
-                new WeaponModel() { Id = 1, Name = "Katana", Damage = 3, AttackSpeed = 1.5f },
-                new WeaponModel() { Id = 2, Name = "Spear", Damage = 4, AttackSpeed = 1 },
-                new WeaponModel() { Id = 3, Name = "Deagle", Damage = 6, AttackSpeed = 0.7f },
-                new WeaponModel() { Id = 4, Name = "Laser SMG", Damage = 1, AttackSpeed = 3 },
-                new WeaponModel() { Id = 5, Name = "Shotgun", Damage = 1, AttackSpeed = 0.5f }
+                new WeaponModel() { Id = 1, Name = "Katana", Damage = 3, Speed = 1.5f },
+                new WeaponModel() { Id = 2, Name = "Spear", Damage = 4, Speed = 1 },
+                new WeaponModel() { Id = 3, Name = "Deagle", Damage = 6, Speed = 0.7f },
+                new WeaponModel() { Id = 4, Name = "Laser SMG", Damage = 1, Speed = 3 },
+                new WeaponModel() { Id = 5, Name = "Shotgun", Damage = 1, Speed = 0.5f }
             );
 
             modelBuilder.Entity<ArtifactModel>().HasData
             (
-                new ArtifactModel() { Id = 1, Name = "Flammable blood", MaxLevel = 3 },
-                new ArtifactModel() { Id = 2, Name = "Poisonous blood", MaxLevel = 3 },
-                new ArtifactModel() { Id = 3, Name = "Exploding corpses", MaxLevel = 3 },
-                new ArtifactModel() { Id = 4, Name = "Revenge damage", MaxLevel = 3 }
-            );
-
-            modelBuilder.Entity<RoomModel>().HasData
-            (
-                new RoomModel() { Id = 1, Name = "Entry room" },
-                new RoomModel() { Id = 2, Name = "Exit room" },
-                new RoomModel() { Id = 3, Name = "Encounter room" },
-                new RoomModel() { Id = 4, Name = "Shop room" },
-                new RoomModel() { Id = 5, Name = "Boss room" }
+                new ArtifactModel() { Id = 1, Name = "Flammable blood", Power = 3 },
+                new ArtifactModel() { Id = 2, Name = "Poisonous blood", Power = 3 },
+                new ArtifactModel() { Id = 3, Name = "Exploding corpses", Power = 3 },
+                new ArtifactModel() { Id = 4, Name = "Revenge damage", Power = 3 }
             );
         }
     }

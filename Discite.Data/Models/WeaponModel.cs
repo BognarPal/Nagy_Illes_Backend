@@ -13,7 +13,7 @@ namespace Discite.Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public float Damage { get; set; }
-        public float AttackSpeed { get; set; }
+        public float Speed { get; set; }
 
         public ICollection<RunWeaponModel> Runs { get; set; }
     }

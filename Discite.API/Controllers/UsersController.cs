@@ -25,9 +25,15 @@ namespace Discite.API.Controllers
              tokenService = new TokenService();
         }
 
+        /// <summary>
+        /// Get all user
+        /// </summary>
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        [Route("api/user")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<UserDto>> GetUsers()
         {
             if (Request.uid() != 0)
                 return Unauthorized();
@@ -35,9 +41,15 @@ namespace Discite.API.Controllers
             return Ok(userRepository.GetAll().Select(u => new UserDto { Id = u.Id, Email = u.Email, Username = u.UserName, RegisterDate = u.RegisterDate, LastActive = u.LastActive }));
         }
 
-        [HttpGet("{id}")]
+        /// <summary>
+        /// Get specific user
+        /// </summary>
+        [HttpGet]
         [Authorize]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
+        [Route("api/user/{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(UserDto))]
+        public ActionResult<UserDto> GetUser([FromRoute] int id)
         {
             var user = userRepository.GetAll().SingleOrDefault(u => u.Id == id);
             int uid = Request.uid();
@@ -51,16 +63,21 @@ namespace Discite.API.Controllers
                 Username = user.UserName,
                 RegisterDate = user.RegisterDate,
                 LastActive = user.LastActive,
-                Classes = user.Classes != null ? user.Classes.Select(u => u.Id) : null,
                 Runs = user.Runs != null ? user.Runs.Select(r => r.Id) : null
             };
 
-            return ruser;
+            return Ok(ruser);
         }
 
+        /// <summary>
+        /// Update user informations
+        /// </summary>
         [HttpPut]
         [Authorize]
-        public async Task<ActionResult<UserDto>> EditUser(RegisterDto registerDto)
+        [Route("api/user")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(UserDto))]
+        public ActionResult<UserDto> EditUser([FromBody] RegisterDto registerDto)
         {
             using var hmac = new HMACSHA256();
 
@@ -82,12 +99,18 @@ namespace Discite.API.Controllers
                 Username = uuser.UserName
             };
 
-            return ruser;
+            return Ok(ruser);
         } 
 
-        [HttpPost("register")]
+        /// <summary>
+        /// Register new user
+        /// </summary>
+        [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<UserDto>> Register([FromBody]RegisterDto registerDto)
+        [Route("api/user/register")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(UserDto))]
+        public ActionResult<UserDto> Register([FromBody] RegisterDto registerDto)
         {
             using var hmac = new HMACSHA256();
 
@@ -110,9 +133,15 @@ namespace Discite.API.Controllers
             };
         }
 
-        [HttpPost("login")]
+        /// <summary>
+        /// Login
+        /// </summary>
+        [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<UserDto>> Login([FromBody]LoginDto loginDto)
+        [Route("api/user/login")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(UserDto))]
+        public ActionResult<UserDto> Login([FromBody] LoginDto loginDto)
         {
             UserModel user = userRepository.GetAll().SingleOrDefault(u => u.Email == loginDto.Email);
 
@@ -134,6 +163,21 @@ namespace Discite.API.Controllers
                 Email = user.Email,
                 Token = tokenService.CreateToken(user),
             };
-        } 
+        }
+        /// <summary>
+        /// Ban user
+        /// </summary>
+        [HttpDelete]
+        [Route("api/user/{id}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult BanUser([FromRoute] int id)
+        {
+            if (Request.uid() != 0)
+            {
+                return Unauthorized();
+            }
+            return Ok();
+        }
     }
 }

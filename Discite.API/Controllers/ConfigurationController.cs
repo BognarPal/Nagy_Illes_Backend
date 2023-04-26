@@ -7,6 +7,8 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Discite.API.Services;
 using Discite.API.Extensions;
+using Swashbuckle.Swagger.Annotations;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace Discite.API.Controllers
 {
@@ -15,50 +17,56 @@ namespace Discite.API.Controllers
         WeaponRepository weaponRepository;
         EnemyRepository enemyRepository;
         ArtifactRepository artifactRepository;
-        ClassRepository classRepository;
         public ConfigurationController()
         {
             weaponRepository = new WeaponRepository();
             enemyRepository = new EnemyRepository();
             artifactRepository = new ArtifactRepository();
-            classRepository = new ClassRepository();
         }
 
+        /// <summary>
+        /// Get game configuration
+        /// </summary>
         [HttpGet]
         [AllowAnonymous]
-        public ConfigurationDto Config()
+        [Route("api/config")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type= typeof(ConfigurationDto))]
+        public ActionResult<ConfigurationDto> Config()
         {
             var config = new ConfigurationDto()
             {
-                Weapons = weaponRepository.GetAll().Select(w => new Weapon() { Id = w.Id, Name = w.Name, Damage = w.Damage, AttackSpeed = w.AttackSpeed }),
-                Enemies = enemyRepository.GetAll().Select(e => new Enemy() { Id = e.Id, Name = e.Name, Damage = e.Damage, Energy = e.Energy, MaxHp = e.MaxHp, Speed = e.Speed }),
-                Classes = classRepository.GetAll().Select(c => new Class() { Id = c.Id, Name = c.Name, Damage = c.Damage, Energy = c.Energy, MaxHp = c.MaxHp, Speed = c.Speed }),
-                Artifacts = artifactRepository.GetAll().Select(a => new Artifact() { Id = a.Id, Name = a.Name, MaxLevel = a.MaxLevel })
+                Weapons = weaponRepository.GetAll().Select(w => new Weapon() { Id = w.Id, Name = w.Name, Damage = w.Damage, Speed = w.Speed }),
+                Enemies = enemyRepository.GetAll().Select(e => new Enemy() { Id = e.Id, Name = e.Name, Damage = e.Damage, Health = e.Health, Speed = e.Speed }),
+                Artifacts = artifactRepository.GetAll().Select(a => new Artifact() { Id = a.Id, Name = a.Name, Power = a.Power })
             };
 
-            return config;
+            return Ok(config);
         }
 
+        /// <summary>
+        /// Update game configuration
+        /// </summary>
         [HttpPut]
         [Authorize]
+        [Route("api/config")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ConfigurationDto> EditConfig(ConfigurationDto config)
         {
             if (Request.uid() != 0)
                 return Unauthorized();
 
             foreach (var w in config.Weapons)
-                weaponRepository.Update(new WeaponModel() { Id = w.Id, Name = w.Name, Damage = w.Damage, AttackSpeed = w.AttackSpeed });
- 
-            foreach (var e in config.Enemies)
-                enemyRepository.Update(new EnemyModel() { Id = e.Id, Name = e.Name, Damage = e.Damage, Energy = e.Energy, MaxHp = e.MaxHp, Speed = e.Speed });
-    
-            foreach (var c in config.Classes)
-                classRepository.Update(new ClassModel() { Id = c.Id, Name = c.Name, Damage = c.Damage, Energy = c.Energy, MaxHp = c.MaxHp, Speed = c.Speed });
-   
-            foreach (var a in config.Artifacts)
-                artifactRepository.Update(new ArtifactModel() { Id = a.Id, Name = a.Name, MaxLevel = a.MaxLevel });
+                weaponRepository.Update(new WeaponModel() { Id = w.Id, Name = w.Name, Damage = w.Damage, Speed = w.Speed });
 
-            return Ok(Config());
+            foreach (var e in config.Enemies)
+                enemyRepository.Update(new EnemyModel() { Id = e.Id, Name = e.Name, Damage = e.Damage, Health = e.Health, Speed = e.Speed });
+
+            foreach (var a in config.Artifacts)
+                artifactRepository.Update(new ArtifactModel() { Id = a.Id, Name = a.Name, Power = a.Power });
+
+            return Ok();
         }
     }
 }

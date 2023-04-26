@@ -19,6 +19,5 @@ namespace Discite.Data.Models
         public WeaponModel Weapon { get; set; }
 
         public int Picked { get; set; }
-        public int Seen { get; set; }
     }
 }

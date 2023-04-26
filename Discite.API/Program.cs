@@ -6,6 +6,8 @@ using Discite.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -72,7 +74,15 @@ builder.Services.AddAuthentication(option =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project: Discite API", Version = "v1" });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
@@ -84,15 +94,6 @@ var app = builder.Build();
 app.UseSwagger(c =>
 {
     c.RouteTemplate = "swagger/{documentName}/swagger.json";
-    c.PreSerializeFilters.Add((swagger, httpReq) =>
-    {
-        var oldPaths = swagger.Paths.ToDictionary(entry => entry.Key, entry => entry.Value);
-        foreach (var path in oldPaths)
-        {
-            swagger.Paths.Remove(path.Key);
-            swagger.Paths.Add(path.Key.Replace("api", "api/api"), path.Value);
-        }
-    });
 });
 
 app.UseSwaggerUI();

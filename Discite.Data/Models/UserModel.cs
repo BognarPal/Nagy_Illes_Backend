@@ -20,11 +20,15 @@ namespace Discite.Data.Models
         public byte[] Hash { get; set; }
         [Required]
         public byte[] Salt { get; set; }
-        [Column("register_date")]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         public DateTime LastActive { get; set; } = DateTime.Now;
-        public ICollection<RunModel> Runs { get; set; }
-        public ICollection<UserClassModel> Classes { get; set; }
 
+        [NotMapped]
+        public int RunsCount { get => Runs.Count; }
+
+        [NotMapped]
+        public int TotalScores { get => Runs.Sum(r => r.Score); }
+
+        public ICollection<RunModel> Runs { get; set; }
     }
 }

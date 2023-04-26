@@ -13,7 +13,7 @@ namespace Discite.Data.Repositories
     {
         public override List<RunModel> GetAll()
         {
-            return dbContext.Set<RunModel>().Include(r => r.Class).Include(r => r.Enemies).Include(r => r.User).ToList();
+            return dbContext.Set<RunModel>().Include(r => r.Enemies).Include(r => r.User).ToList();
         }
     }
 }
