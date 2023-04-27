@@ -1,7 +1,7 @@
 # Project: Discite backend
 
 ## Elérhetőség
-Swagger auth key: 
+
 
 ## Üzemeltetés
 ### Követelmények
@@ -15,3 +15,7 @@ Swagger auth key:
 4. projekt indítása
 vagy
 - start.bat futtatása
+
+### Admin bejelentkezés:
+1. regisztrálás a weboldalon
+2. phpmyadmin user résznél az id átállítása 0-ra
