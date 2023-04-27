@@ -37,9 +37,9 @@ namespace Discite.API.Controllers
         {
             var config = new ConfigurationDto()
             {
-                Weapons = weaponRepository.GetAll().Select(w => new Weapon() { Id = w.Id, Name = w.Name, Damage = w.Damage, Speed = w.Speed }),
-                Enemies = enemyRepository.GetAll().Select(e => new Enemy() { Id = e.Id, Name = e.Name, Damage = e.Damage, Health = e.Health, Speed = e.Speed }),
-                Artifacts = artifactRepository.GetAll().Select(a => new Artifact() { Id = a.Id, Name = a.Name, Power = a.Power })
+                Weapons = weaponRepository.GetAll().Select(w => new Weapon(w)),
+                Enemies = enemyRepository.GetAll().Select(e => new Enemy(e)),
+                Artifacts = artifactRepository.GetAll().Select(a => new Artifact(a))
             };
 
             return Ok(config);
