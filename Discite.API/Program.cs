@@ -107,6 +107,9 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
+    c.AddServer(new OpenApiServer() { Url = "http://localhost" });
+    c.AddServer(new OpenApiServer() { Url = "https://discite.jedlik.cloud/api" });
+
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);

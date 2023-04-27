@@ -61,7 +61,6 @@ namespace Discite.API.Controllers
                 Username = user.UserName,
                 RegisterDate = user.RegisterDate,
                 LastActive = user.LastActive,
-                Runs = user.Runs != null ? user.Runs.Select(r => r.Id) : null
             };
 
             return Ok(ruser);

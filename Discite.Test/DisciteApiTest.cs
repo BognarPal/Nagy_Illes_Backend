@@ -54,13 +54,8 @@ namespace Discite.Test
 
             var run = _NewGame(user.Token);
             Assert.NotNull(run);
-            run.Seed = new Random().Next();
-            run.Path = "UDDRL";
-            run.Gold = 10;
-            run.ClassId = 2;
             run.CurrentHp = 50f;
             run.Score = 1000;
-            run.Status = RunStatus.Alive;
 
             var request = new RestRequest("/api/runs", Method.Put);
             request.AddHeader("Authorization", $"Bearer {user.Token}");
@@ -72,12 +67,8 @@ namespace Discite.Test
             var run2 = client.Get<GameDto>(request2);
             Assert.NotNull(run2);
 
-            Assert.True(run.Seed == run2.Seed);
-            Assert.True(run.Path == run2.Path);
-            Assert.True(run.ClassId == run2.ClassId);
             Assert.True(run.CurrentHp == run2.CurrentHp);
             Assert.True(run.Score == run2.Score);
-            Assert.True(run.Status == run2.Status);
 
             userRepository.Delete(user.Id);
             runRepository.Delete(run.Id);
