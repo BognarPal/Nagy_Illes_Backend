@@ -7,7 +7,6 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Discite.API.Services;
 using Discite.API.Extensions;
-using Swashbuckle.Swagger.Annotations;
 using Microsoft.AspNetCore.Components.Forms;
 using Discite.API.Attributes;
 

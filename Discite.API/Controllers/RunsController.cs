@@ -47,7 +47,16 @@ namespace Discite.API.Controllers
             if (Request.uid() != run.UserId)
                 return Unauthorized();
 
-            RunModel runModel = new RunModel();
+            RunModel runModel = runRepository[run.Id];
+
+            runModel.EndDate = DateTime.Now;
+
+            runModel.Runtime = run.Runtime;
+            runModel.Score = run.Score;
+            runModel.CurrentHp = run.CurrentHp;
+            runModel.Artifacts = run.Artifacts;
+            runModel.Weapons = run.Weapons;
+            runModel.Enemies = run.Enemies;
 
             runRepository.Update(runModel);
             return Ok();
