@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics.Metrics;
 using System.Reflection;
@@ -14,7 +15,6 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
-using static System.Net.Mime.MediaTypeNames;
 
 UserRepository userRepository = new();
 
@@ -107,7 +107,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
-    c.AddServer(new OpenApiServer() { Url = "http://localhost" });
+    c.AddServer(new OpenApiServer() { Url = "http://localhost:5241" });
     c.AddServer(new OpenApiServer() { Url = "https://discite.jedlik.cloud/api" });
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
