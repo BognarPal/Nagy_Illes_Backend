@@ -140,10 +140,7 @@ namespace Discite.Data.Migrations
                     b.Property<int>("ArtifactId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Power")
+                    b.Property<int>("Picked")
                         .HasColumnType("int");
 
                     b.Property<int>("RunId")
@@ -194,14 +191,8 @@ namespace Discite.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<float>("CurrentHp")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Runtime")
-                        .HasColumnType("int");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");

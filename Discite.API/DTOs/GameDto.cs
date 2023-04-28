@@ -9,10 +9,9 @@ namespace Discite.API.DTOs
         public int Id { get; set; }
         public int UserId { get; set; }
         public int Score { get; set; }
-        public int Runtime { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public float CurrentHp { get; set; }
+        public int Wave { get; set; }
 
         public ICollection<RunArtifactModel> Artifacts { get; set; }
         public ICollection<RunWeaponModel> Weapons { get; set; }

@@ -15,10 +15,10 @@ namespace Discite.Data.Models
         public UserModel User { get; set; }
         public int UserId { get; set; }
         public int Score { get; set; }
-        public int Runtime { get; set; }
+        [NotMapped]
+        public int Runtime => (int)(EndDate - StartDate).TotalSeconds;
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; }
-        public float CurrentHp { get; set; }
 
         public ICollection<RunArtifactModel> Artifacts { get; set; }
         public ICollection<RunWeaponModel> Weapons { get; set; }

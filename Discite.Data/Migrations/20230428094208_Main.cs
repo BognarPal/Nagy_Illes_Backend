@@ -93,10 +93,8 @@ namespace Discite.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Score = table.Column<int>(type: "int", nullable: false),
-                    Runtime = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CurrentHp = table.Column<float>(type: "float", nullable: false)
+                    EndDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,8 +116,7 @@ namespace Discite.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RunId = table.Column<int>(type: "int", nullable: false),
                     ArtifactId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<int>(type: "int", nullable: false),
-                    Power = table.Column<int>(type: "int", nullable: false)
+                    Picked = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

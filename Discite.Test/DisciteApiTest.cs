@@ -54,7 +54,6 @@ namespace Discite.Test
 
             var run = _NewGame(user.Token);
             Assert.NotNull(run);
-            run.CurrentHp = 50f;
             run.Score = 1000;
 
             var request = new RestRequest("/api/runs", Method.Put);
@@ -67,7 +66,6 @@ namespace Discite.Test
             var run2 = client.Get<GameDto>(request2);
             Assert.NotNull(run2);
 
-            Assert.True(run.CurrentHp == run2.CurrentHp);
             Assert.True(run.Score == run2.Score);
 
             userRepository.Delete(user.Id);

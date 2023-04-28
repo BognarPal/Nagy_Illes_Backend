@@ -18,7 +18,6 @@ namespace Discite.Data.Models
         public int ArtifactId { get; set; }
         public ArtifactModel Artifact { get; set; }
 
-        public int Name { get; set; }
-        public int Power { get; set; }
+        public int Picked { get; set; }
     }
 }

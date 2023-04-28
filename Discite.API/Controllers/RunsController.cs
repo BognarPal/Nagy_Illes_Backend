@@ -51,9 +51,7 @@ namespace Discite.API.Controllers
 
             runModel.EndDate = DateTime.Now;
 
-            runModel.Runtime = run.Runtime;
             runModel.Score = run.Score;
-            runModel.CurrentHp = run.CurrentHp;
             runModel.Artifacts = run.Artifacts;
             runModel.Weapons = run.Weapons;
             runModel.Enemies = run.Enemies;
