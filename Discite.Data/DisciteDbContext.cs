@@ -57,29 +57,28 @@ namespace Discite.Data
 
             modelBuilder.Entity<EnemyModel>().HasData
             (
-                new EnemyModel() { Id = 1, Name = "Ghoul", Health = 20, Damage = 10, Speed = 0.7f },
-                new EnemyModel() { Id = 2, Name = "Exploder", Health = 5, Damage = 25, Speed = 1 },
-                new EnemyModel() { Id = 3, Name = "Cyber Ghoul", Health = 35, Damage = 20, Speed = 1.5f },
-                new EnemyModel() { Id = 4, Name = "Multi-tank", Health = 60, Damage = 10, Speed = 0.5f },
-                new EnemyModel() { Id = 5, Name = "Agent", Health = 20, Damage = 15, Speed = 0.7f },
-                new EnemyModel() { Id = 6, Name = "Chimera", Health = 200, Damage = 15, Speed = 1.2f }
+                new EnemyModel() { Id = 1, Name = "Baby Bat", Health = 20, Damage = 10, Speed = 0.7f },
+                new EnemyModel() { Id = 2, Name = "Juvenile Bat", Health = 5, Damage = 25, Speed = 1 },
+                new EnemyModel() { Id = 3, Name = "Adult Bat", Health = 35, Damage = 20, Speed = 1.5f },
+                new EnemyModel() { Id = 4, Name = "Bat Queen", Health = 60, Damage = 10, Speed = 0.5f }
             );
 
             modelBuilder.Entity<WeaponModel>().HasData
             (
-                new WeaponModel() { Id = 1, Name = "Katana", Damage = 3, Speed = 1.5f },
-                new WeaponModel() { Id = 2, Name = "Spear", Damage = 4, Speed = 1 },
-                new WeaponModel() { Id = 3, Name = "Deagle", Damage = 6, Speed = 0.7f },
-                new WeaponModel() { Id = 4, Name = "Laser SMG", Damage = 1, Speed = 3 },
-                new WeaponModel() { Id = 5, Name = "Shotgun", Damage = 1, Speed = 0.5f }
+                new WeaponModel() { Id = 1, Name = "Assault Rifle", Damage = 3, Speed = 1.5f },
+                new WeaponModel() { Id = 2, Name = "Anti Matter Rifle", Damage = 4, Speed = 1 },
+                new WeaponModel() { Id = 3, Name = "Plasma Pistol", Damage = 6, Speed = 0.7f },
+                new WeaponModel() { Id = 4, Name = "Singularity Blaster", Damage = 1, Speed = 3 }
             );
 
             modelBuilder.Entity<ArtifactModel>().HasData
             (
-                new ArtifactModel() { Id = 1, Name = "Flammable blood", Power = 3 },
-                new ArtifactModel() { Id = 2, Name = "Poisonous blood", Power = 3 },
-                new ArtifactModel() { Id = 3, Name = "Exploding corpses", Power = 3 },
-                new ArtifactModel() { Id = 4, Name = "Revenge damage", Power = 3 }
+                new ArtifactModel() { Id = 1, Name = "Damage Up", Power = 3 },
+                new ArtifactModel() { Id = 2, Name = "Attack Speed Up", Power = 3 },
+                new ArtifactModel() { Id = 3, Name = "Explosion Radius Up", Power = 3 },
+                new ArtifactModel() { Id = 4, Name = "Movement Speed Up", Power = 3 },
+                new ArtifactModel() { Id = 5, Name = "Double Shot", Power = 3 },
+                new ArtifactModel() { Id = 6, Name = "Max Health Up", Power = 3 }
             );
         }
     }

@@ -202,10 +202,12 @@ namespace Discite.Data.Migrations
                 columns: new[] { "Id", "Name", "Power" },
                 values: new object[,]
                 {
-                    { 1, "Flammable blood", 3f },
-                    { 2, "Poisonous blood", 3f },
-                    { 3, "Exploding corpses", 3f },
-                    { 4, "Revenge damage", 3f }
+                    { 1, "Damage Up", 3f },
+                    { 2, "Attack Speed Up", 3f },
+                    { 3, "Explosion Radius Up", 3f },
+                    { 4, "Movement Speed Up", 3f },
+                    { 5, "Double Shot", 3f },
+                    { 6, "Max Health Up", 3f }
                 });
 
             migrationBuilder.InsertData(
@@ -213,12 +215,10 @@ namespace Discite.Data.Migrations
                 columns: new[] { "Id", "Damage", "Health", "Name", "Speed" },
                 values: new object[,]
                 {
-                    { 1, 10f, 20f, "Ghoul", 0.7f },
-                    { 2, 25f, 5f, "Exploder", 1f },
-                    { 3, 20f, 35f, "Cyber Ghoul", 1.5f },
-                    { 4, 10f, 60f, "Multi-tank", 0.5f },
-                    { 5, 15f, 20f, "Agent", 0.7f },
-                    { 6, 15f, 200f, "Chimera", 1.2f }
+                    { 1, 10f, 20f, "Baby Bat", 0.7f },
+                    { 2, 25f, 5f, "Juvenile Bat", 1f },
+                    { 3, 20f, 35f, "Adult Bat", 1.5f },
+                    { 4, 10f, 60f, "Bat Queen", 0.5f }
                 });
 
             migrationBuilder.InsertData(
@@ -226,11 +226,10 @@ namespace Discite.Data.Migrations
                 columns: new[] { "Id", "Damage", "Name", "Speed" },
                 values: new object[,]
                 {
-                    { 1, 3f, "Katana", 1.5f },
-                    { 2, 4f, "Spear", 1f },
-                    { 3, 6f, "Deagle", 0.7f },
-                    { 4, 1f, "Laser SMG", 3f },
-                    { 5, 1f, "Shotgun", 0.5f }
+                    { 1, 3f, "Assault Rifle", 1.5f },
+                    { 2, 4f, "Anti Matter Rifle", 1f },
+                    { 3, 6f, "Plasma Pistol", 0.7f },
+                    { 4, 1f, "Singularity Blaster", 3f }
                 });
 
             migrationBuilder.CreateIndex(

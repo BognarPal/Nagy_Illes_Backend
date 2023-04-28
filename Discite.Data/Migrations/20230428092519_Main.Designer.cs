@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Discite.Data.Migrations
 {
     [DbContext(typeof(DisciteDbContext))]
-    [Migration("20230426095843_Main")]
+    [Migration("20230428092519_Main")]
     partial class Main
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,25 +41,37 @@ namespace Discite.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Flammable blood",
+                            Name = "Damage Up",
                             Power = 3f
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Poisonous blood",
+                            Name = "Attack Speed Up",
                             Power = 3f
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Exploding corpses",
+                            Name = "Explosion Radius Up",
                             Power = 3f
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Revenge damage",
+                            Name = "Movement Speed Up",
+                            Power = 3f
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Double Shot",
+                            Power = 3f
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Max Health Up",
                             Power = 3f
                         });
                 });
@@ -92,7 +104,7 @@ namespace Discite.Data.Migrations
                             Id = 1,
                             Damage = 10f,
                             Health = 20f,
-                            Name = "Ghoul",
+                            Name = "Baby Bat",
                             Speed = 0.7f
                         },
                         new
@@ -100,7 +112,7 @@ namespace Discite.Data.Migrations
                             Id = 2,
                             Damage = 25f,
                             Health = 5f,
-                            Name = "Exploder",
+                            Name = "Juvenile Bat",
                             Speed = 1f
                         },
                         new
@@ -108,7 +120,7 @@ namespace Discite.Data.Migrations
                             Id = 3,
                             Damage = 20f,
                             Health = 35f,
-                            Name = "Cyber Ghoul",
+                            Name = "Adult Bat",
                             Speed = 1.5f
                         },
                         new
@@ -116,24 +128,8 @@ namespace Discite.Data.Migrations
                             Id = 4,
                             Damage = 10f,
                             Health = 60f,
-                            Name = "Multi-tank",
+                            Name = "Bat Queen",
                             Speed = 0.5f
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Damage = 15f,
-                            Health = 20f,
-                            Name = "Agent",
-                            Speed = 0.7f
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Damage = 15f,
-                            Health = 200f,
-                            Name = "Chimera",
-                            Speed = 1.2f
                         });
                 });
 
@@ -312,36 +308,29 @@ namespace Discite.Data.Migrations
                         {
                             Id = 1,
                             Damage = 3f,
-                            Name = "Katana",
+                            Name = "Assault Rifle",
                             Speed = 1.5f
                         },
                         new
                         {
                             Id = 2,
                             Damage = 4f,
-                            Name = "Spear",
+                            Name = "Anti Matter Rifle",
                             Speed = 1f
                         },
                         new
                         {
                             Id = 3,
                             Damage = 6f,
-                            Name = "Deagle",
+                            Name = "Plasma Pistol",
                             Speed = 0.7f
                         },
                         new
                         {
                             Id = 4,
                             Damage = 1f,
-                            Name = "Laser SMG",
+                            Name = "Singularity Blaster",
                             Speed = 3f
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Damage = 1f,
-                            Name = "Shotgun",
-                            Speed = 0.5f
                         });
                 });
 
