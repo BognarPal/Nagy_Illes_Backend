@@ -20,6 +20,6 @@ namespace Discite.Data.Models
 
         public int Deaths { get; set; }
         public int Seen { get; set; }
-        public int Damage { get; set; }
+        public float Damage { get; set; }
     }
 }

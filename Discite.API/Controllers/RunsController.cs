@@ -52,9 +52,7 @@ namespace Discite.API.Controllers
             runModel.EndDate = DateTime.Now;
 
             runModel.Score = run.Score;
-            runModel.Artifacts = run.Artifacts;
-            runModel.Weapons = run.Weapons;
-            runModel.Enemies = run.Enemies;
+            //TODO: Artifacts, enemies, weapons save
 
             runRepository.Update(runModel);
             return Ok();
