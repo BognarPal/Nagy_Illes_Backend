@@ -1,7 +1,7 @@
 # Project: Discite backend
 
 ## Elérhetőség
-
+https://discite.jedlik.cloud/api/swagger/index.html
 
 ## Üzemeltetés
 ### Követelmények
