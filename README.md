@@ -3,6 +3,15 @@
 ## Elérhetőség
 https://discite.jedlik.cloud/api/swagger/index.html
 
+# Szerepkörök
+Admin: 
+email: admin@gmail.com
+jelszó: Admin123
+
+User:
+email: testuser@gmail.com
+jelszó: Testuser123
+
 ## Üzemeltetés
 ### Követelmények
 - lokálisan futó mysql kiszolgáló
