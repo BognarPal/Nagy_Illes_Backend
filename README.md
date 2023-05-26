@@ -30,5 +30,4 @@ vagy
 2. phpmyadmin user résznél az id átállítása 0-ra
 
 ### Bearer key megszerzése a swagger-nél:
-1. bejelentkezés admin-ként
-2. az oldalon jobb klikk-> elem vizsgálata -> hálózat -> user -> fejléc és a "Authorization" megkeresése -> Bearer kihagyása és csak az utána lévő másolása pl: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwIiwibmJmIjoxNjgyNTgwMzM5LCJleHAiOjE2ODI1ODM5MzksImlhdCI6MTY4MjU4MDMzOX0.fzAevm-E9DL4lYymQRmb6CGZcrCDsLbKY9K0bgnM1KiO0OMMPxIlLhZDeNYPmgQAkdBr28mKKAhwgSmxXgG_uw
+A '/api/user/register' vagy a '/api/user/login' vépontokat használva a válaszban érkező json objektum "token" mezőjének értékét kell bemásolni az oldal tetején található "Authorize" feliratú gombra kattintva megjelenő ablak beviteli mezőjébe.
