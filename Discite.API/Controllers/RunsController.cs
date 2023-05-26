@@ -6,6 +6,9 @@ using Discite.API.Services;
 using Discite.API.Extensions;
 using Discite.API.DTOs;
 using Discite.API.Attributes;
+using Microsoft.VisualBasic;
+using System.Collections.ObjectModel;
+using System.Collections;
 
 namespace Discite.API.Controllers
 {
@@ -52,7 +55,32 @@ namespace Discite.API.Controllers
             runModel.EndDate = DateTime.Now;
 
             runModel.Score = run.Score;
-            //TODO: Artifacts, enemies, weapons save
+            runModel.Artifacts = new List<RunArtifactModel>();
+            runModel.Weapons = new List<RunWeaponModel>();
+            runModel.Enemies = new List<RunEnemyModel>();
+
+            run.Artifacts.ToList().ForEach(
+                r => runModel.Artifacts.Add(new RunArtifactModel 
+                { 
+                    ArtifactId = r.ArtifactId, 
+                    Picked = r.Picked,
+                }));
+
+            run.Weapons.ToList().ForEach(
+                r => runModel.Weapons.Add(new RunWeaponModel
+                {
+                    WeaponId = r.WeaponId,
+                    Picked = r.Picked,
+                }));
+
+            run.Enemies.ToList().ForEach(
+                r => runModel.Enemies.Add(new RunEnemyModel
+                {
+                    EnemyId = r.EnemyId,
+                    Seen = r.Seen,
+                    Damage = r.Damage,
+                    Deaths = r.Deaths,
+                }));
 
             runRepository.Update(runModel);
             return Ok();
